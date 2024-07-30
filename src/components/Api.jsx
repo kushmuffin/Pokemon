@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const fetchPokemonList = async (limit = 151) => {
+export const fetchPokemonList = async (limit = 649) => {
   try {
     const response = await axios.get(`https://pokeapi.co/api/v2/pokemon?limit=${limit}`);
     return response.data.results;
