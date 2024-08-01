@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import Pokemonlist from './components/Pokemonlist';
+import Fruitslist from './components/Teamslist';
 import './App.css'
 
 
@@ -11,7 +12,8 @@ function App() {
           <h1>Welcome to the Pokemon App</h1>
         </header>
         <main>
-          <Pokemonlist />
+          <Fruitslist />
+          {/* <Pokemonlist /> */}
         </main>
       </div>
     </>
