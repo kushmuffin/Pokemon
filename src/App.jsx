@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import Pokemon from './components/Pokemon';
+import Pokemonlist from './components/Pokemonlist';
 import './App.css'
 
 
@@ -11,7 +11,7 @@ function App() {
           <h1>Welcome to the Pokemon App</h1>
         </header>
         <main>
-          <Pokemon />
+          <Pokemonlist />
         </main>
       </div>
     </>
