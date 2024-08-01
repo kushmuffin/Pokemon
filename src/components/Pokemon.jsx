@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { fetchPokemonList, fetchPokemonDetails, updatePokemonDetails } from './PokemonApi'; // 假設 api 文件名為 api.js
+import { fetchPokemonList, fetchPokemonDetails } from './Api'; // 假設 api 文件名為 api.js
 
 const PokemonList = () => {
   const [pokemonList, setPokemonList] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [pokemonDetails, setPokemonDetails] = useState([]);
-
-  const [inputValue, setInputValue] = useState('');
-  const [filteredPokemonDetails, setFilteredPokemonDetails] = useState([]);
 
   useEffect(() => {
     const getPokemonList = async () => {
@@ -39,7 +36,6 @@ const PokemonList = () => {
         // 過濾掉 null 值（有問題的寶可夢）
         const validDetails = details.filter(detail => detail !== null);
         setPokemonDetails(validDetails);
-        setFilteredPokemonDetails(validDetails); // 初始時顯示所有寶可夢
         console.log('Pokemon details fetched:', validDetails);
       } catch (error) {
         console.error('Error fetching Pokemon details:', error);
@@ -50,62 +46,39 @@ const PokemonList = () => {
     }
   }, [pokemonList]);
 
-  //控制世代、顯示數量
   const generations = {
     1: { start: 0, end: 151 },
     2: { start: 151, end: 251 },
-    3: { start: 251, end: 386 },
-    4: { start: 386, end: 493 },
-    5: { start: 493, end: 649 }
+    3: { start: 251, end: 386 }
   };
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
-    const start = generations[page].start;
-    const end = generations[page].end;
-    setFilteredPokemonDetails(pokemonDetails.slice(start, end));
   };
 
   const renderPagination = () => {
     const totalPages = Object.keys(generations).length;
     const buttons = [];
-    const generation = ['紅／綠', '金／銀', '紅寶石／藍寶石', '鑽石／珍珠', '黑／白' ]
     for (let i = 1; i <= totalPages; i++) {
       buttons.push(
         <button key={i} onClick={() => handlePageChange(i)}>
-          {generation[i - 1]}
+          {i}
         </button>
       );
     }
     return <div>{buttons}</div>;
   };
 
-  const handleInputChange = (e) => {
-    setInputValue(e.target.value);
-    console.log('Input value:', e.target.value);
-  };
-
-  const handleSearch = () => {
-    console.log('Input value at search:', inputValue);
-    const filtered = pokemonDetails.filter(pokemon =>
-      pokemon.name?.toLowerCase().includes(inputValue.toLowerCase())
-    );
-    console.log('Filtered Pokemon:', filtered);
-    setFilteredPokemonDetails(filtered);
-  };
+  const filteredPokemonList = pokemonDetails.slice(
+    generations[currentPage].start,
+    generations[currentPage].end
+  );
 
   return (
     <div>
       <h1>Pokemon List</h1>
       {renderPagination()}
-      <input
-        type="text"
-        placeholder="輸入名稱"
-        value={inputValue}
-        onChange={handleInputChange}
-      />
-      <button onClick={handleSearch}>搜尋</button>
-      {filteredPokemonDetails.length === 0 ? (
+      {filteredPokemonList.length === 0 ? (
         <p>Loading...</p>
       ) : (
         <table>
@@ -123,7 +96,7 @@ const PokemonList = () => {
             </tr>
           </thead>
           <tbody>
-            {filteredPokemonDetails.map((pokemon) => {
+            {filteredPokemonList.map((pokemon) => {
               const hpStat = pokemon.stats?.find(stat => stat.stat.name === 'hp');
               const attackStat = pokemon.stats?.find(stat => stat.stat.name === 'attack');
               const defenseStat = pokemon.stats?.find(stat => stat.stat.name === 'defense');
