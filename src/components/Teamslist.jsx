@@ -2,13 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { fetchTeamsList } from './TeamsApi';
 
 const TeamsList = () => {
-  const [teamsList, setTeamsList] = useState([]); // 確保初始值為空陣列
-  const [columnCount, setColumnCount] = useState(0);
+  const [teamsList, setTeamsList] = useState([]);
+  const [teamName, setTeamName] = useState('USA'); // 默認顯示 USA 隊伍
+  const [availableTeams, setAvailableTeams] = useState([]);
+  const [columnCount, setColumnCount] = useState(7);
 
   useEffect(() => {
     const getTeamsList = async () => {
       try {
-        const data = await fetchTeamsList();
+        const data = await fetchTeamsList(teamName);
         setTeamsList(data);
         console.log('Teams list fetched:', data);
       } catch (error) {
@@ -16,10 +18,21 @@ const TeamsList = () => {
       }
     };
     getTeamsList();
+  }, [teamName]);
+
+  useEffect(() => {
+    const getAvailableTeams = async () => {
+      try {
+        const data = await fetchTeamsList();
+        setAvailableTeams(Object.keys(data));
+      } catch (error) {
+        console.error('Error fetching available teams:', error);
+      }
+    };
+    getAvailableTeams();
   }, []);
 
   useEffect(() => {
-    // Calculate the number of columns dynamically based on the <thead> or the data
     const columns = document.querySelectorAll('thead th').length;
     setColumnCount(columns);
   }, []);
@@ -27,6 +40,11 @@ const TeamsList = () => {
   return (
     <div>
       <h1>Team List</h1>
+      <select onChange={(e) => setTeamName(e.target.value)} value={teamName}>
+        {availableTeams.map((team, index) => (
+          <option key={index} value={team}>{team}</option>
+        ))}
+      </select>
       <table>
         <thead>
           <tr>
@@ -45,15 +63,15 @@ const TeamsList = () => {
               <td colSpan={columnCount}>No Player Available</td>
             </tr>
           ) : (
-            teamsList.map((team, index) => (
+            teamsList.map((player, index) => (
               <tr key={index}>
-                <td>{team.number}</td>
-                <td>{team.name}</td>
-                <td>{team.position}</td>
-                <td>{team.Height}</td>
-                <td>{team.Weight}</td>
-                <td>{team.Age}</td>
-                <td>{team.CurrentTeam}</td>
+                <td>{player.number}</td>
+                <td>{player.name}</td>
+                <td>{player.position}</td>
+                <td>{player.Height}</td>
+                <td>{player.Weight}</td>
+                <td>{player.Age}</td>
+                <td>{player.CurrentTeam}</td>
               </tr>
             ))
           )}

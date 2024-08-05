@@ -1,5 +1,5 @@
-import express from 'express';
-import cors from 'cors'; // 引入 cors
+import express from 'express'; // 建立伺服器
+import cors from 'cors'; // 中間件，用來解決跨域資源共享問題，允許不同來源的請求訪問您的伺服器。
 
 const app = express();
 const port = 3000;
