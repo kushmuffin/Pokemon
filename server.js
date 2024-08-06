@@ -1,10 +1,12 @@
 import express from 'express'; // 建立伺服器
-import cors from 'cors'; // 中間件，用來解決跨域資源共享問題，允許不同來源的請求訪問您的伺服器。
+import cors from 'cors'; // 中間件，用來解決跨域資源共享問題，允許不同來源的請求訪問伺服器。
+import bodyParser from 'body-parser';
 
 const app = express();
 const port = 3000;
 
 app.use(cors()); // 使用 cors 中間件
+app.use(bodyParser.json()); // 新增這行來解析 JSON 請求
 
 const teams = {
   USA:[
@@ -20,14 +22,18 @@ const teams = {
     { number: '13', name: 'Bam Adebayo', position: 'Center', Height: '6-9', Weight: '225', Age: '27', CurrentTeam: 'Miami Heat'},
     { number: '14', name: 'Anthony Davis', position: 'Forward', Height: '6-10', Weight: '253', Age: '31', CurrentTeam: 'Los Angeles Lakers'},
     { number: '15', name: 'Devin Booker', position: 'Guard', Height: '6-5', Weight: '206', Age: '27', CurrentTeam: 'Phoenix Sun'},
+  ],
+  Serbia:[
+    { number: '4', name: 'Stephen Curry', position: 'Guard', Height: '6-2', Weight: '185', Age: '36', CurrentTeam: 'Golden State Warriors'}
+    
   ]
 };
 
-app.get('/api/teams', (req, res) => {
-  res.json(teams);
+app.get('/api/teams', (req, res) => { //建立路由 .get(Path, (Request, Response))
+  res.json(teams); //以json格式回傳
 });
 
-app.get('/api/teams/:teamName', (req, res) => {
+app.get('/api/teams/:teamName', (req, res) => { //取出整支球隊
   const { teamName } = req.params;
   const teamData = teams[teamName];
 
