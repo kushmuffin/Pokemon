@@ -32,3 +32,19 @@ export const deletePlayerFromTeam = async (teamName, playerName) => { // 刪除�
     throw error;
   }
 };
+
+export const updatePlayerInTeam = async (teamName, playerName, newPlayerName, newPlayerPosition) => {
+  try {
+    const response = await axios.put(
+      `http://localhost:3000/api/teams/${teamName}/players/${playerName}`,
+      {
+        newPlayerName: newPlayerName,
+        newPlayerPosition: newPlayerPosition
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error('Error updating player:', error);
+    throw error;
+  }
+};
