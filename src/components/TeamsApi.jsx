@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-export const fetchTeamsList = async (teamName) => { //以國家取得球員資料
+// 取得球隊資料
+export const fetchTeamsList = async (teamName) => {
   try {
     const url = teamName ? `http://localhost:3000/api/teams/${teamName}` : 'http://localhost:3000/api/teams';
     const response = await axios.get(url);
@@ -11,7 +12,8 @@ export const fetchTeamsList = async (teamName) => { //以國家取得球員資�
   }
 };
 
-export const addPlayerToTeam = async (teamName, playerData) => { //返回新增球員
+// 新增球員到球隊
+export const addPlayerToTeam = async (teamName, playerData) => {
   try {
     const url = `http://localhost:3000/api/teams/${teamName}/players`;
     const response = await axios.post(url, playerData);
@@ -22,9 +24,10 @@ export const addPlayerToTeam = async (teamName, playerData) => { //返回新增�
   }
 };
 
-export const deletePlayerFromTeam = async (teamName, playerName) => { // 刪除球員
+// 刪除球員
+export const deletePlayerFromTeam = async (teamName, playerId) => {
   try {
-    const url = `http://localhost:3000/api/teams/${teamName}/players/${playerName}`;
+    const url = `http://localhost:3000/api/teams/${teamName}/players/${playerId}`;
     const response = await axios.delete(url);
     return response.data;
   } catch (error) {
@@ -33,15 +36,11 @@ export const deletePlayerFromTeam = async (teamName, playerName) => { // 刪除�
   }
 };
 
-export const updatePlayerInTeam = async (teamName, playerName, newPlayerName, newPlayerPosition) => {
+// 更新球員資料
+export const updatePlayerInTeam = async (teamName, playerId, playerData) => {
   try {
-    const response = await axios.put(
-      `http://localhost:3000/api/teams/${teamName}/players/${playerName}`,
-      {
-        newPlayerName: newPlayerName,
-        newPlayerPosition: newPlayerPosition
-      }
-    );
+    const url = `http://localhost:3000/api/teams/${teamName}/players/${playerId}`;
+    const response = await axios.put(url, playerData);
     return response.data;
   } catch (error) {
     console.error('Error updating player:', error);
