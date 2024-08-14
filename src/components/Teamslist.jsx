@@ -14,7 +14,7 @@ const TeamsList = () => {
     const getTeamsList = async () => {
       try {
         const data = await fetchTeamsList(teamName);
-        setTeamsList(data);
+        setTeamsList(data.players);
         console.log('Teams list fetched:', data);
       } catch (error) {
         console.error('Error fetching Teams list:', error);
@@ -40,17 +40,14 @@ const TeamsList = () => {
     setColumnCount(columns);
   }, []);
 
-  const handlePlayerAdded = (newPlayer) => { //新增一筆球員資料並觸發rerender
-    const updatedTeamsList = [...teamsList];
-    updatedTeamsList.unshift(newPlayer);
-    setTeamsList(updatedTeamsList);
-    // setTeamsList([...teamsList, newPlayer]) // 加入方式
+  const handlePlayerAdded = (newPlayer) => {
+    setTeamsList([newPlayer, ...teamsList]);
   };
 
-  const handlePlayerDelete = async (playerName) => {
+  const handlePlayerDelete = async (playerId) => {
     try {
-      await deletePlayerFromTeam(teamName, playerName);
-      setTeamsList(teamsList.filter(player => player.name !== playerName));
+      await deletePlayerFromTeam(teamName, playerId);
+      setTeamsList(teamsList.filter(player => player.id !== playerId));
     } catch (error) {
       console.error('Error deleting player:', error);
     }
@@ -62,12 +59,13 @@ const TeamsList = () => {
 
   const handleSave = async () => {
     try {
-      const updatedPlayer = await updatePlayerInTeam(teamName, editingPlayer.name, editingPlayer);
+      const updatedPlayer = await updatePlayerInTeam(teamName, editingPlayer.id, editingPlayer);
+      // console.log('Updated player:', updatedPlayer); // 調試用，檢查更新後的玩家資料
       const updatedTeamsList = teamsList.map(player =>
-        player.name === updatedPlayer.name ? updatedPlayer : player
+        player.id === updatedPlayer.id ? updatedPlayer : player
       );
       setTeamsList(updatedTeamsList);
-      setEditingPlayer(null); // 保存成功後清空編輯狀態
+      setEditingPlayer(null);
     } catch (error) {
       console.error('Error updating player:', error);
     }
@@ -75,6 +73,7 @@ const TeamsList = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    // console.log(`Field changed: ${name}, New value: ${value}`); // 調試用，檢查輸入框的變更
     setEditingPlayer({
       ...editingPlayer,
       [name]: value
@@ -140,7 +139,7 @@ const TeamsList = () => {
                     <td>{player.weight}</td>
                     <td>{player.currentTeam}</td> */}
                     <td> {/* 刪除&編輯球員 */}
-                      <button onClick={() => handlePlayerDelete(player.name)}>刪除</button>
+                      <button onClick={() => handlePlayerDelete(player.id)}>刪除</button>
                       <button onClick={() => handleEdit(player)}>編輯</button>
                     </td>
                   </>

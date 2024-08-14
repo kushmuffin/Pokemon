@@ -9,9 +9,9 @@ const AddPlayer = ({ teamName, onPlayerAdded }) => {
     pick: '',
     age: '',
     position: '',
-    height: '',
-    weight: '',
-    currentTeam: ''
+    // height: '',
+    // weight: '',
+    // currentTeam: ''
   });
 
   const handleChange = (e) => {
@@ -34,9 +34,9 @@ const AddPlayer = ({ teamName, onPlayerAdded }) => {
         pick: '',
         age: '',
         position: '',
-        height: '',
-        weight: '',
-        currentTeam: ''
+        // height: '',
+        // weight: '',
+        // currentTeam: ''
       });
     } catch (error) {
       console.error('Error adding player:', error);
@@ -53,9 +53,9 @@ const AddPlayer = ({ teamName, onPlayerAdded }) => {
           <input className='enter' name="pick" value={playerData.pick} onChange={handleChange} placeholder="順位" required />
           <input className='enter' name="age" value={playerData.age} onChange={handleChange} placeholder="年齡" required />
           <input className='enter' name="position" value={playerData.position} onChange={handleChange} placeholder="位置" required />
-          <input className='enter' name="height" value={playerData.height} onChange={handleChange} placeholder="身高" required />
+          {/* <input className='enter' name="height" value={playerData.height} onChange={handleChange} placeholder="身高" required />
           <input className='enter' name="weight" value={playerData.weight} onChange={handleChange} placeholder="體重" required />
-          <input className='enter' name="currentTeam" value={playerData.currentTeam} onChange={handleChange} placeholder="所屬球隊" required />
+          <input className='enter' name="currentTeam" value={playerData.currentTeam} onChange={handleChange} placeholder="所屬球隊" required /> */}
         </div>
         <button className='addButton' type="submit">新增球員</button>
       </form>

@@ -9,22 +9,22 @@ app.use(cors()); // 使用 cors 中間件
 app.use(bodyParser.json()); // 新增這行來解析 JSON 請求
 
 const teams = {
-  // USA:{
-  //   players: [
-  //   { number: '0', name: 'Tyrese Haliburton', draft: '2020', pick: '12', age: '24', position: 'Guard', height: '6-5', weight: '185', currentTeam: 'Indiana Pacer'},
-  //   { number: '1', name: 'Devin Booker', draft: '2015', pick: '13', age: '27', position: 'Guard', height: '6-5', weight: '206', currentTeam: 'Phoenix Sun'},
-  //   { number: '4', name: 'Jrue Holiday', draft: '2009', pick: '17', age: '34', position: 'Guard', height: '6-3', weight: '229', currentTeam: 'Boston Celtic'},
-  //   { number: '5', name: 'Anthony Edwards', draft: '2020', pick: '1', age: '22', position: 'Guard', height: '6-4', weight: '225', currentTeam: 'Minnesota Timberwolves'},
-  //   { number: '9', name: 'Derrick White', draft: '2017', pick: '29', age: '30', position: 'Guard', height: '6-4', weight: '190', currentTeam: 'Boston Celtic'},
-  //   { number: '30', name: 'Stephen Curry', draft: '2009', pick: '7', age: '36', position: 'Guard', height: '6-2', weight: '185', currentTeam: 'Golden State Warriors'},
-  //   { number: '0', name: 'Jayson Tatum', draft: '2017', pick: '3', age: '26', position: 'Forward', height: '6-8', weight: '205', currentTeam: 'Boston Celtic'},
-  //   { number: '3', name: 'Anthony Davis', draft: '2012', pick: '1', age: '31', position: 'Forward', height: '6-10', weight: '253', currentTeam: 'Los Angeles Lakers'},
-  //   { number: '6', name: 'LeBron James', draft: '2003', pick: '1', age: '39', position: 'Forward', height: '6-9', weight: '250', currentTeam: 'Los Angeles Lakers'},
-  //   { number: '35', name: 'Kevin Durant', draft: '2007', pick: '2', age: '35', position: 'Forward', height: '6-10', weight: '225', currentTeam: 'Phoenix Sun'},
-  //   { number: '13', name: 'Bam Adebayo', draft: '2017', pick: '14', age: '27', position: 'Center', height: '6-9', weight: '225', currentTeam: 'Miami Heat'},
-  //   { number: '21', name: 'Joel Embiid', draft: '2014', pick: '3', age: '30', position: 'Center', height: '7-0', weight: '280', currentTeam: 'Philadelphia Sixer'},
-  //   ],
-  // },
+  USA:{
+    players: [
+    { id: 1, number: '0', name: 'Tyrese Haliburton', draft: '2020', pick: '12', age: '24', position: 'Guard', height: '6-5', weight: '185', currentTeam: 'Indiana Pacer'},
+    { id: 2, number: '1', name: 'Devin Booker', draft: '2015', pick: '13', age: '27', position: 'Guard', height: '6-5', weight: '206', currentTeam: 'Phoenix Sun'},
+    { id: 3, number: '4', name: 'Jrue Holiday', draft: '2009', pick: '17', age: '34', position: 'Guard', height: '6-3', weight: '229', currentTeam: 'Boston Celtic'},
+    { id: 4, number: '5', name: 'Anthony Edwards', draft: '2020', pick: '1', age: '22', position: 'Guard', height: '6-4', weight: '225', currentTeam: 'Minnesota Timberwolves'},
+    { id: 5, number: '9', name: 'Derrick White', draft: '2017', pick: '29', age: '30', position: 'Guard', height: '6-4', weight: '190', currentTeam: 'Boston Celtic'},
+    { id: 6, number: '30', name: 'Stephen Curry', draft: '2009', pick: '7', age: '36', position: 'Guard', height: '6-2', weight: '185', currentTeam: 'Golden State Warriors'},
+    { id: 7, number: '0', name: 'Jayson Tatum', draft: '2017', pick: '3', age: '26', position: 'Forward', height: '6-8', weight: '205', currentTeam: 'Boston Celtic'},
+    { id: 8, number: '3', name: 'Anthony Davis', draft: '2012', pick: '1', age: '31', position: 'Forward', height: '6-10', weight: '253', currentTeam: 'Los Angeles Lakers'},
+    { id: 9, number: '6', name: 'LeBron James', draft: '2003', pick: '1', age: '39', position: 'Forward', height: '6-9', weight: '250', currentTeam: 'Los Angeles Lakers'},
+    { id: 10, number: '35', name: 'Kevin Durant', draft: '2007', pick: '2', age: '35', position: 'Forward', height: '6-10', weight: '225', currentTeam: 'Phoenix Sun'},
+    { id: 11, number: '13', name: 'Bam Adebayo', draft: '2017', pick: '14', age: '27', position: 'Center', height: '6-9', weight: '225', currentTeam: 'Miami Heat'},
+    { id: 12, number: '21', name: 'Joel Embiid', draft: '2014', pick: '3', age: '30', position: 'Center', height: '7-0', weight: '280', currentTeam: 'Philadelphia Sixer'},
+    ],
+  },
   Serbia: {
     players: [
       { id: 1, number: '13', name: 'Bogdan Bogdanović', draft: '2014', pick: '27', age: '31', position: 'Guard', height: '6-5', weight: '220',   currentTeam: 'Atlanta Hawks'},
