@@ -42,7 +42,7 @@ const teams = {
   Greece:{
     players:[
 
-    ],   
+    ],
   },
 };
 

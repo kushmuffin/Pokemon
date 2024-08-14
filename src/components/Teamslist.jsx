@@ -35,7 +35,7 @@ const TeamsList = () => {
     getAvailableTeams();
   }, []);
 
-  useEffect(() => { //
+  useEffect(() => { //表格
     const columns = document.querySelectorAll('thead th').length;
     setColumnCount(columns);
   }, []);
@@ -60,7 +60,7 @@ const TeamsList = () => {
   const handleSave = async () => {
     try {
       const updatedPlayer = await updatePlayerInTeam(teamName, editingPlayer.id, editingPlayer);
-      // console.log('Updated player:', updatedPlayer); // 調試用，檢查更新後的玩家資料
+      // console.log('Updated player:', updatedPlayer); // test
       const updatedTeamsList = teamsList.map(player =>
         player.id === updatedPlayer.id ? updatedPlayer : player
       );
@@ -73,7 +73,7 @@ const TeamsList = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    // console.log(`Field changed: ${name}, New value: ${value}`); // 調試用，檢查輸入框的變更
+    // console.log(`Field changed: ${name}, New value: ${value}`); // test
     setEditingPlayer({
       ...editingPlayer,
       [name]: value
@@ -83,12 +83,27 @@ const TeamsList = () => {
   return (
     <div>
       <h1>NBA player from every nation</h1>
-      <select onChange={(e) => setTeamName(e.target.value)} value={teamName}>
-        {availableTeams.map((team, index) => (
-          <option key={index} value={team}>{team}</option>
-        ))}
-      </select>
-      <AddPlayer teamName={teamName} onPlayerAdded={handlePlayerAdded} />
+      <div className='addPlayer'>
+        <div className='addForm'>
+          <div className="dropdown nation_list">
+            <button className="dropdown-toggle nation_list_button" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+              Dropdown button
+            </button>
+            <ul className="dropdown-menu nation_list_ul" aria-labelledby="dropdownMenuButton1">
+              {availableTeams.map((team, index) => (
+                <li 
+                  className="dropdown-item nation_list_li"
+                  key={index}
+                  onClick={() => setTeamName(team)} // 當選擇該選項時，更新 teamName
+                >
+                  <a href="#">{team}</a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        <AddPlayer teamName={teamName} onPlayerAdded={handlePlayerAdded} />
+        </div>
+      </div>
       <table>
         <thead>
           <tr>
@@ -112,7 +127,7 @@ const TeamsList = () => {
           ) : (
             teamsList.map((player, index) => (
               <tr key={index}>
-                {editingPlayer && editingPlayer.name === player.name ? (
+                {editingPlayer && editingPlayer.id === player.id ? (
                   <>
                     <td><input name="number" value={editingPlayer.number} onChange={handleChange} /></td>
                     <td><input name="name" value={editingPlayer.name} onChange={handleChange} /></td>
@@ -139,8 +154,8 @@ const TeamsList = () => {
                     <td>{player.weight}</td>
                     <td>{player.currentTeam}</td> */}
                     <td> {/* 刪除&編輯球員 */}
-                      <button onClick={() => handlePlayerDelete(player.id)}>刪除</button>
-                      <button onClick={() => handleEdit(player)}>編輯</button>
+                      <button className='edit_btn' onClick={() => handleEdit(player)}>編輯</button>{' '}
+                      <button className='delete_btn' onClick={() => handlePlayerDelete(player.id)}>刪除</button>
                     </td>
                   </>
                 )}

@@ -45,7 +45,7 @@ const AddPlayer = ({ teamName, onPlayerAdded }) => {
 
   return (
     <>
-      <form className='addForm' onSubmit={handleSubmit}>
+      <form className='' onSubmit={handleSubmit}>
         <div className='addArea'>
           <input className='enter' name="number" value={playerData.number} onChange={handleChange} placeholder="背號" required />
           <input className='enter' name="name" value={playerData.name} onChange={handleChange} placeholder="名稱" required />
@@ -57,7 +57,7 @@ const AddPlayer = ({ teamName, onPlayerAdded }) => {
           <input className='enter' name="weight" value={playerData.weight} onChange={handleChange} placeholder="體重" required />
           <input className='enter' name="currentTeam" value={playerData.currentTeam} onChange={handleChange} placeholder="所屬球隊" required /> */}
         </div>
-        <button className='addButton' type="submit">新增球員</button>
+        <button className='add_btn' type="submit">新增球員</button>
       </form>
     </>
   );

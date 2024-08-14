@@ -2,31 +2,56 @@
   text-align: center;
 }
 
-.addForm {
+.nation_list {
+  margin: 1vh 0;
+}
+
+.nation_list_button {
+  background-color: #fff;
+  color: #000;
+}
+
+.nation_list_button:hover {
+  border: 1px solid lightblue;
+}
+
+.nation_list_li>a {
+  color:#000
+}
+
+.addPlayer{
   display: flex;
-  flex-wrap: wrap;
   justify-content: center;
-  align-items: center;
-  flex-direction: column;
+  margin: 2vh 0;
+}
+
+.addForm {
+  width: 80%;
+  display: flex;
 }
 
 .addArea {
+  display: flex;
   color: black;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .enter {
   margin: 0.5rem;
-  border: 2px solid lightblue;
-  border-radius: 8px;
+  border: none;
+  border-bottom: 2px solid lightblue;
+  border-radius: 4px;
   line-height: 2;
   text-align: center;
 }
+
 .enter:focus{
-  border: 2px solid orange;
-  background-color: rgb(255, 232, 189);
+  border: none;
+  border-bottom: 2px solid rgb(122, 166, 181);
 }
 
-.addButton {
+.add_btn {
   background-color: #c1e7bc;
 }
 
@@ -43,8 +68,12 @@ th, td {
 }
 
 th {
-  background-color: #f2f2f2;
+  background-color: lightblue;
   text-wrap: nowrap;
+}
+
+tr:nth-child(odd) {
+  background-color: rgb(206, 208, 209);
 }
 
 tr:nth-child(even) {
@@ -52,5 +81,20 @@ tr:nth-child(even) {
 }
 
 tr:hover {
-  background-color: #f1f1f1;
+  background-color: rgb(173, 187, 192);
+}
+
+.add_btn,
+.delete_btn,
+.edit_btn {
+  box-shadow: 1px 1px 5px 0px gray;
+}
+
+.delete_btn {
+  background-color: #ffaeae;
+  transition: 1s ease;
+}
+
+.delete_btn:hover {
+  background-color: #ff4d4d;
 }
