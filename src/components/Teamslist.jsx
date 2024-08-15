@@ -9,6 +9,7 @@ const TeamsList = () => {
   const [availableTeams, setAvailableTeams] = useState([]); // 管理下拉選單
   const [editingPlayer, setEditingPlayer] = useState(null); // 修改球員資料
   const [columnCount, setColumnCount] = useState(); // 預設無資料欄位 顯示No Player
+  const [refresh, setRefresh] = useState(false);
 
   useEffect(() => { //球員名單
     const getTeamsList = async () => {
@@ -59,17 +60,22 @@ const TeamsList = () => {
 
   const handleSave = async () => {
     try {
-      const updatedPlayer = await updatePlayerInTeam(teamName, editingPlayer.id, editingPlayer);
-      // console.log('Updated player:', updatedPlayer); // test
-      const updatedTeamsList = teamsList.map(player =>
-        player.id === updatedPlayer.id ? updatedPlayer : player
-      );
-      setTeamsList(updatedTeamsList);
+      await updatePlayerInTeam(teamName, editingPlayer.id, editingPlayer);
+      
+      // 强制重新获取最新的球员数据
+      const refreshedList = await fetchTeamsList(teamName);
+      setTeamsList(refreshedList.players);
+      
       setEditingPlayer(null);
     } catch (error) {
       console.error('Error updating player:', error);
     }
   };
+  
+
+  const handleCancel = () => {
+    setEditingPlayer(null); // 觸發setEditingPlayer重置以退出
+  }
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -87,11 +93,11 @@ const TeamsList = () => {
         <div className='addForm'>
           <div className="dropdown nation_list">
             <button className="dropdown-toggle nation_list_button" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-              Dropdown button
+            {teamName}
             </button>
             <ul className="dropdown-menu nation_list_ul" aria-labelledby="dropdownMenuButton1">
               {availableTeams.map((team, index) => (
-                <li 
+                <li
                   className="dropdown-item nation_list_li"
                   key={index}
                   onClick={() => setTeamName(team)} // 當選擇該選項時，更新 teamName
@@ -107,12 +113,12 @@ const TeamsList = () => {
       <table>
         <thead>
           <tr>
-            <th>背號</th>
-            <th>名稱</th>
-            <th>選秀年分</th>
-            <th>順位</th>
-            <th>年齡</th>
-            <th>位置</th>
+            <th style={{width: '10%'}}>Number</th>
+            <th style={{width: '20%'}}>Name</th>
+            <th style={{width: '10%'}}>Draft</th>
+            <th style={{width: '10%'}}>Pick</th>
+            <th style={{width: '10%'}}>Age</th>
+            <th style={{width: '20%'}}>Position</th>
             {/* <th>身高</th>
             <th>體重</th>
             <th>所屬球隊</th> */}
@@ -125,21 +131,22 @@ const TeamsList = () => {
               <td colSpan={columnCount}>No Player Available</td>
             </tr>
           ) : (
-            teamsList.map((player, index) => (
-              <tr key={index}>
+            teamsList.map((player) => (
+              <tr key={player.id}>
                 {editingPlayer && editingPlayer.id === player.id ? (
                   <>
-                    <td><input name="number" value={editingPlayer.number} onChange={handleChange} /></td>
-                    <td><input name="name" value={editingPlayer.name} onChange={handleChange} /></td>
-                    <td><input name="draft" value={editingPlayer.draft} onChange={handleChange} /></td>
-                    <td><input name="pick" value={editingPlayer.pick} onChange={handleChange} /></td>
-                    <td><input name="age" value={editingPlayer.age} onChange={handleChange} /></td>
-                    <td><input name="position" value={editingPlayer.position} onChange={handleChange} /></td>
+                    <td><input className='edit_input' name="number" value={editingPlayer.number} onChange={handleChange} /></td>
+                    <td><input className='edit_input' name="name" value={editingPlayer.name} onChange={handleChange} /></td>
+                    <td><input className='edit_input' name="draft" value={editingPlayer.draft} onChange={handleChange} /></td>
+                    <td><input className='edit_input' name="pick" value={editingPlayer.pick} onChange={handleChange} /></td>
+                    <td><input className='edit_input' name="age" value={editingPlayer.age} onChange={handleChange} /></td>
+                    <td><input className='edit_input' name="position" value={editingPlayer.position} onChange={handleChange} /></td>
                     {/* <td><input name="height" value={editingPlayer.height} onChange={handleChange} /></td>
                     <td><input name="weight" value={editingPlayer.weight} onChange={handleChange} /></td>
                     <td><input name="currentTeam" value={editingPlayer.currentTeam} onChange={handleChange} /></td> */}
                     <td>
-                      <button onClick={handleSave}>保存</button>
+                      <button onClick={handleSave}>保存</button>{' '}
+                      <button onClick={handleCancel}>取消</button>
                     </td>
                   </>
                 ) : (

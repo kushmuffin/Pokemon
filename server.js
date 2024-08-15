@@ -9,7 +9,7 @@ app.use(cors()); // 使用 cors 中間件
 app.use(bodyParser.json()); // 新增這行來解析 JSON 請求
 
 const teams = {
-  USA:{
+  USA: {
     players: [
     { id: 1, number: '0', name: 'Tyrese Haliburton', draft: '2020', pick: '12', age: '24', position: 'Guard', height: '6-5', weight: '185', currentTeam: 'Indiana Pacer'},
     { id: 2, number: '1', name: 'Devin Booker', draft: '2015', pick: '13', age: '27', position: 'Guard', height: '6-5', weight: '206', currentTeam: 'Phoenix Sun'},
@@ -39,8 +39,8 @@ const teams = {
       { id: 4, number: '21', name: 'Moritz Wagner', draft: '2018', pick: '25', age: '27', position: 'Center', height: '6-11', weight: '245',   currentTeam: 'Orlando Magic'},
     ],
   },
-  Greece:{
-    players:[
+  Greece: {
+    players: [
 
     ],
   },

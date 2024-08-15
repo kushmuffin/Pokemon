@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  margin-top: 5vh;
 }
 
 .nation_list {
@@ -84,6 +85,11 @@ tr:hover {
   background-color: rgb(173, 187, 192);
 }
 
+.edit_input {
+  width: 100%;
+  text-align: center;
+}
+
 .add_btn,
 .delete_btn,
 .edit_btn {
@@ -97,4 +103,6 @@ tr:hover {
 
 .delete_btn:hover {
   background-color: #ff4d4d;
+  border-color: #ff1f1f;
+
 }

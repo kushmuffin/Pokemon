@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import Pokemonlist from './components/Pokemonlist';
 import Teamslist from './components/Teamslist';
+import Login from './components/Login';
 import './App.css'
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -14,7 +15,8 @@ function App() {
           {/* <h1>NBA player from nation</h1> */}
         </header>
         <main>
-          <Teamslist />
+          <Login />
+          {/* <Teamslist /> */}
           {/* <Pokemonlist /> */}
         </main>
       </div>
