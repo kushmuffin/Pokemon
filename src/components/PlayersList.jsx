@@ -3,13 +3,12 @@ import { fetchTeamsList, deletePlayerFromTeam, updatePlayerInTeam } from './Team
 
 import AddPlayer from './AddPlayer';
 
-const TeamsList = () => {
+const PlayersList = () => {
   const [teamsList, setTeamsList] = useState([]); // 管理隊伍列表(球員名單)
-  const [teamName, setTeamName] = useState('USA'); // 隊伍默認 USA 隊伍
+  const [teamName, setTeamName] = useState('Boston_Celtic'); // 默認隊伍
   const [availableTeams, setAvailableTeams] = useState([]); // 管理下拉選單
   const [editingPlayer, setEditingPlayer] = useState(null); // 修改球員資料
   const [columnCount, setColumnCount] = useState(); // 預設無資料欄位 顯示No Player
-  const [refresh, setRefresh] = useState(false);
 
   useEffect(() => { //球員名單
     const getTeamsList = async () => {
@@ -96,10 +95,10 @@ const TeamsList = () => {
             {teamName}
             </button>
             <ul className="dropdown-menu nation_list_ul" aria-labelledby="dropdownMenuButton1">
-              {availableTeams.map((team, index) => (
+              {availableTeams.map((team, player) => (
                 <li
                   className="dropdown-item nation_list_li"
-                  key={index}
+                  key={player.id}
                   onClick={() => setTeamName(team)} // 當選擇該選項時，更新 teamName
                 >
                   <a href="#">{team}</a>
@@ -175,4 +174,4 @@ const TeamsList = () => {
   );
 };
 
-export default TeamsList;
+export default PlayersList;

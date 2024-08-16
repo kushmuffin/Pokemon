@@ -88,6 +88,11 @@ tr:hover {
 .edit_input {
   width: 100%;
   text-align: center;
+  margin: 0.5rem;
+  border: none;
+  border-bottom: 2px solid lightblue;
+  border-radius: 4px;
+  line-height: 2;
 }
 
 .add_btn,
@@ -104,5 +109,9 @@ tr:hover {
 .delete_btn:hover {
   background-color: #ff4d4d;
   border-color: #ff1f1f;
+}
 
+/* TeamOverview */
+.team_content {
+  text-align: justify;
 }

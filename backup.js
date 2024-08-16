@@ -9,42 +9,39 @@
 // app.use(bodyParser.json()); // 新增這行來解析 JSON 請求
 
 // const teams = {
-//   Boston_Celtic: {
-//     conference: 'Eastern',
-//     division: 'Atlantic',
-//     arena: 'TD Garden',
-//     location: 'Boston, Massachusetts',
-//     owner: [
-//       'Boston Basketball Partners',
-//     ],
-//     general: 'Brad Stevens',
-//     head_coach: 'Joe Mazzulla',
-//     championships: 18,
+//   USA: {
 //     players: [
-//       { id: 1, number: '7', name: 'Jaylen Brown', draft: '2016', pick: '3', age: '27', position: 'Guard', height: '6-6', weight: '223' },
-//       { id: 2, number: '4', name: 'Jrue Holiday', draft: '2009', pick: '17', age: '34', position: 'Guard', height: '6-3', weight: '229' },
-//       { id: 3, number: '9', name: 'Derrick White', draft: '2017', pick: '29', age: '30', position: 'Guard', height: '6-4', weight: '190' },
-//       { id: 4, number: '0', name: 'Jayson Tatum', draft: '2017', pick: '3', age: '26', position: 'Forward', height: '6-8', weight: '205' },
-//       { id: 5, number: '42', name: 'Al Horford', draft: '2007', pick: '3', age: '38', position: 'Center', height: '6-9', weight: '240' },
+//     { id: 1, number: '0', name: 'Tyrese Haliburton', draft: '2020', pick: '12', age: '24', position: 'Guard', height: '6-5', weight: '185', currentTeam: 'Indiana Pacer'},
+//     { id: 2, number: '1', name: 'Devin Booker', draft: '2015', pick: '13', age: '27', position: 'Guard', height: '6-5', weight: '206', currentTeam: 'Phoenix Sun'},
+//     { id: 3, number: '4', name: 'Jrue Holiday', draft: '2009', pick: '17', age: '34', position: 'Guard', height: '6-3', weight: '229', currentTeam: 'Boston Celtic'},
+//     { id: 4, number: '5', name: 'Anthony Edwards', draft: '2020', pick: '1', age: '22', position: 'Guard', height: '6-4', weight: '225', currentTeam: 'Minnesota Timberwolves'},
+//     { id: 5, number: '9', name: 'Derrick White', draft: '2017', pick: '29', age: '30', position: 'Guard', height: '6-4', weight: '190', currentTeam: 'Boston Celtic'},
+//     { id: 6, number: '30', name: 'Stephen Curry', draft: '2009', pick: '7', age: '36', position: 'Guard', height: '6-2', weight: '185', currentTeam: 'Golden State Warriors'},
+//     { id: 7, number: '0', name: 'Jayson Tatum', draft: '2017', pick: '3', age: '26', position: 'Forward', height: '6-8', weight: '205', currentTeam: 'Boston Celtic'},
+//     { id: 8, number: '3', name: 'Anthony Davis', draft: '2012', pick: '1', age: '31', position: 'Forward', height: '6-10', weight: '253', currentTeam: 'Los Angeles Lakers'},
+//     { id: 9, number: '6', name: 'LeBron James', draft: '2003', pick: '1', age: '39', position: 'Forward', height: '6-9', weight: '250', currentTeam: 'Los Angeles Lakers'},
+//     { id: 10, number: '35', name: 'Kevin Durant', draft: '2007', pick: '2', age: '35', position: 'Forward', height: '6-10', weight: '225', currentTeam: 'Phoenix Sun'},
+//     { id: 11, number: '13', name: 'Bam Adebayo', draft: '2017', pick: '14', age: '27', position: 'Center', height: '6-9', weight: '225', currentTeam: 'Miami Heat'},
+//     { id: 12, number: '21', name: 'Joel Embiid', draft: '2014', pick: '3', age: '30', position: 'Center', height: '7-0', weight: '280', currentTeam: 'Philadelphia Sixer'},
 //     ],
 //   },
-//   Los_Angeles_Lakers: {
-//     conference: 'Western',
-//     division: 'Pacific',
-//     arena: 'Crypto.com Arena',
-//     location: 'Los Angeles, California',
-//     owner: [
-//       'Jeanie Buss', 'Buss Family Trusts', 
-//     ],
-//     general: 'Rob Pelinka',
-//     head_coach: 'JJ Redick',
-//     championships: 17,
+//   Serbia: {
 //     players: [
-//       { id: 1, number: '1', name: 'DAngelo Russell', draft: '2015', pick: '2', age: '28', position: 'Guard', height: '6-3', weight: '193' },
-//       { id: 2, number: '15', name: 'Austin Reaves', draft: 'undraft', pick: 'undraft', age: '26', position: 'Guard', height: '6-5', weight: '206' },
-//       { id: 3, number: '28', name: 'Rui Hachimura', draft: '2019', pick: '9', age: '26', position: 'Forward', height: '6-8', weight: '250' },
-//       { id: 4, number: '6', name: 'LeBron James', draft: '2003', pick: '1', age: '39', position: 'Forward', height: '6-9', weight: '250' },
-//       { id: 5, number: '3', name: 'Anthony Davis', draft: '2012', pick: '1', age: '31', position: 'Forward', height: '6-10', weight: '253' },
+//       { id: 1, number: '13', name: 'Bogdan Bogdanović', draft: '2014', pick: '27', age: '31', position: 'Guard', height: '6-5', weight: '220',   currentTeam: 'Atlanta Hawks'},
+//       { id: 2, number: '15', name: 'Nikola Jokić', draft: '2014', pick: '41', age: '29', position: 'Center', height: '6-11', weight: '284', currentTeam: 'Denver Nuggets'},
+//     ],
+//   },
+//   Germany: {
+//     players: [
+//       { id: 1, number: '17', name: 'Dennis Schröder', draft: '2013', pick: '17', age: '30', position: 'Guard', height: '6-1', weight: '172',   currentTeam: 'Brooklyn Nets'},
+//       { id: 2, number: '22', name: 'Franz Wagner', draft: '2021', pick: '8', age: '22', position: 'Forward', height: '6-10', weight: '225', currentTeam: 'Orlando Magic'},
+//       { id: 3, number: '10', name: 'Daniel Theis', draft: '2013', pick: 'undraft', age: '32', position: 'Center', height: '6-8', weight: '245',  currentTeam: 'New Orleans Pelicans'},
+//       { id: 4, number: '21', name: 'Moritz Wagner', draft: '2018', pick: '25', age: '27', position: 'Center', height: '6-11', weight: '245',   currentTeam: 'Orlando Magic'},
+//     ],
+//   },
+//   Greece: {
+//     players: [
+
 //     ],
 //   },
 // };
