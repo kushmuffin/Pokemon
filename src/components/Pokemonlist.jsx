@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { fetchPokemonList, fetchPokemonDetails } from './PokemonApi'; // 假設 api 文件名為 api.js
+import PokemonDetailDialog from './PokemonDetailDialog';
 
 const PokemonList = () => {
   const [pokemonList, setPokemonList] = useState([]);
@@ -8,6 +9,7 @@ const PokemonList = () => {
 
   const [inputValue, setInputValue] = useState('');
   const [filteredPokemonDetails, setFilteredPokemonDetails] = useState([]);
+  const [selectedPokemon, setSelectedPokemon] = useState(null); // 用於儲存被選中的寶可夢
 
   useEffect(() => {
     const getPokemonList = async () => {
@@ -94,13 +96,27 @@ const PokemonList = () => {
     setFilteredPokemonDetails(filtered);
   };
 
+  const handleDetailClick = (pokemon) => {
+    setSelectedPokemon(pokemon); // 設定被選中的寶可夢，打開對話框
+    //   alert(`Details for ${pokemon.name}`);
+  };
+
+  const handleAddToListClick = (pokemon) => {
+    alert(`${pokemon.name} added to list`);
+  };
+
+  const handleCloseDialog = () => {
+    setSelectedPokemon(null); // 關閉對話框
+  };
+
   return (
     <div>
       <h1>Pokemon List</h1>
       {renderPagination()}
       <input
-        type="text"
-        placeholder="輸入名稱"
+        className='enter'
+        type='text'
+        placeholder='輸入名稱'
         value={inputValue}
         onChange={handleInputChange}
       />
@@ -120,6 +136,7 @@ const PokemonList = () => {
               <th>生命值</th>
               <th>攻擊力</th>
               <th>防禦力</th>
+              <th>操作</th>
             </tr>
           </thead>
           <tbody>
@@ -149,11 +166,22 @@ const PokemonList = () => {
                   <td>{hp}</td>
                   <td>{attack}</td>
                   <td>{defense}</td>
+                  <td>
+                    <button onClick={() => handleDetailClick(pokemon)}>詳細資料</button> {' '}
+                    <button onClick={() => handleAddToListClick(pokemon)}>加入列表</button>
+                  </td>
                 </tr>
               );
             })}
           </tbody>
         </table>
+      )}
+      {/* 新增 PokemonDetailDialog */}
+      {selectedPokemon && (
+        <PokemonDetailDialog 
+          pokemon={selectedPokemon} 
+          onClose={handleCloseDialog} 
+        />
       )}
     </div>
   );

@@ -1,8 +1,8 @@
 import { useState } from 'react'
-import Pokemonlist from './components/Pokemonlist';
+import PokemonList from './components/PokemonList';
 import Login from './components/Login';
-import TeamsOverview from './components/TeamsOverview';
-import PlayersList from './components/PlayersList';
+import TeamsOverview from './components/nbabackpu/TeamsOverview';
+import PlayersList from './components/nbabackpu/PlayersList';
 import './App.css'
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -17,9 +17,9 @@ function App() {
         </header>
         <main>
           {/* <Login /> */}
-          <TeamsOverview />
-          <PlayersList />
-          {/* <Pokemonlist /> */}
+          {/* <TeamsOverview /> */}
+          {/* <PlayersList /> */}
+          <PokemonList />
         </main>
       </div>
     </>
