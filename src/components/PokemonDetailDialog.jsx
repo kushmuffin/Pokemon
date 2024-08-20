@@ -14,15 +14,18 @@ const PokemonDetailDialog = ({ pokemon, onClose }) => {
     <div className="dialog-overlay" onClick={handleOverlayClick}>
       <div className="dialog-content">
         <h2>{pokemon.name}</h2>
-        <img src={pokemon.sprites?.front_default} alt={pokemon.name} />
-        <p>編號: {pokemon.id}</p>
-        <p>高度: {pokemon.height}</p>
-        <p>重量: {pokemon.weight}</p>
-        <p>基礎經驗值: {pokemon.base_experience}</p>
-        <p>生命值: {pokemon.stats?.find(stat => stat.stat.name === 'hp')?.base_stat}</p>
-        <p>攻擊力: {pokemon.stats?.find(stat => stat.stat.name === 'attack')?.base_stat}</p>
-        <p>防禦力: {pokemon.stats?.find(stat => stat.stat.name === 'defense')?.base_stat}</p>
-        <button onClick={onClose}>關閉</button>
+        <img className='artwork' src={pokemon.sprites?.other?.['official-artwork']?.front_default} />
+        {/* <div> */}
+          <p>編號: {pokemon.id}</p>
+          <p>特性: {pokemon?.abilities?.map(obj => obj.ability.name).join(', ')}</p>
+          <p>高度: {pokemon.height}</p>
+          <p>重量: {pokemon.weight}</p>
+          <p>基礎經驗值: {pokemon.base_experience}</p>
+          <p>生命值: {pokemon.stats?.find(stat => stat.stat.name === 'hp')?.base_stat}</p>
+          <p>攻擊力: {pokemon.stats?.find(stat => stat.stat.name === 'attack')?.base_stat}</p>
+          <p>防禦力: {pokemon.stats?.find(stat => stat.stat.name === 'defense')?.base_stat}</p>
+          <button onClick={onClose}>關閉</button>
+        {/* </div> */}
       </div>
     </div>
   );

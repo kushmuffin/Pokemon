@@ -97,7 +97,7 @@ const PokemonList = () => {
   };
 
   const handleDetailClick = (pokemon) => {
-    setSelectedPokemon(pokemon); // 設定被選中的寶可夢，打開對話框
+    setSelectedPokemon(pokemon); // 設定被選中的寶可夢，打開Dialog
     //   alert(`Details for ${pokemon.name}`);
   };
 
@@ -124,7 +124,26 @@ const PokemonList = () => {
       {filteredPokemonDetails.length === 0 ? (
         <p>Loading...</p>
       ) : (
-        <table>
+        <div className='' style={{width: '70rem'}}>
+          <div className='pokemon-content'>
+            {filteredPokemonDetails.map((pokemon) => (
+              <div className='pokemon-item' key={pokemon.id}>
+                <img className='bitimg' src={pokemon.sprites.front_default} alt={pokemon.name} />
+                <div>
+                  <span>#{pokemon.id}</span>
+                  <span>{pokemon.name}</span>
+                </div>
+                <div>
+                  <button className='detail_btn' onClick={() => handleDetailClick(pokemon)}><span>詳細資料</span></button> {' '}
+                  <button className='add_btn' onClick={() => handleAddToListClick(pokemon)}><span>加入列表</span></button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+        {/* <table>
           <thead>
             <tr>
               <th>編號</th>
@@ -151,7 +170,7 @@ const PokemonList = () => {
 
               return (
                 <tr key={pokemon.id}>
-                  <td>{pokemon.id}</td>
+                  <td>#{pokemon.id}</td>
                   <td>
                     {pokemon.sprites?.front_default ? (
                       <img src={pokemon.sprites.front_default} alt={pokemon.name} />
@@ -174,8 +193,8 @@ const PokemonList = () => {
               );
             })}
           </tbody>
-        </table>
-      )}
+        </table> */}
+
       {/* 新增 PokemonDetailDialog */}
       {selectedPokemon && (
         <PokemonDetailDialog 
