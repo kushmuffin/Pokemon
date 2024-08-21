@@ -1,8 +1,10 @@
 import { useState } from 'react'
-import PokemonList from './components/PokemonList';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Login from './components/Login';
-import TeamsOverview from './components/nbabackpu/TeamsOverview';
-import PlayersList from './components/nbabackpu/PlayersList';
+import Sidebar from './components/Sidebar'; // 引入組件
+import TrainerForm from './components/TrainerForm'; // 引入組件
+import PokemonList from './components/PokemonList'; // 引入組件
+
 import './App.css'
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -10,19 +12,21 @@ import 'bootstrap/dist/js/bootstrap.bundle.min';
 
 function App() {
   return (
-    <>
-      <div className="App">
+    <Router>
+      <div className="App" style={{ display: 'flex', 'flex-direction': 'column' }}>
+        <Sidebar />
         <header className="App-header">
-          {/* <h1>NBA player from nation</h1> */}
+          {/* <h1>Pokemon!</h1> */}
         </header>
-        <main>
-          {/* <Login /> */}
-          {/* <TeamsOverview /> */}
-          {/* <PlayersList /> */}
-          <PokemonList />
+        <main style={{ flex: 1, 'margin-left': '250px' }}>
+          <Routes>
+            <Route path="/trainer-form" element={<TrainerForm />} />
+            <Route path="/pokemon-list" element={<PokemonList />} />
+            {/* <PokemonList /> */}
+          </Routes>
         </main>
       </div>
-    </>
+    </Router>
   )
 }
 

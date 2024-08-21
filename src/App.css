@@ -3,7 +3,30 @@
   margin-top: 5vh;
 }
 
-/* pokemon */
+/* Sidebar */
+.sidebar {
+  top: 0;
+  left: 0;
+  position: fixed;
+  width: 250px;
+  height: 100vh;
+  background-Color: #f8f9fa;
+  padding: 1rem;
+  box-Shadow: 2px 0 5px rgba(0,0,0,0.1)
+}
+
+/* App.css */
+.app-container {
+  display: flex;
+}
+
+.main-content {
+  margin-left: 250px; /* 確保主要內容不會被 sidebar 覆蓋 */
+  padding: 15px;
+  width: calc(100% - 250px);
+}
+
+/* Pokemon */
 .bitimg,
 .artwork {
   background-color: #bcbcbc5c;
@@ -22,6 +45,13 @@
   width: 11.6rem;
   border-radius: 20px;
   box-shadow: 0px 0px 8px 1px gray;
+}
+
+.pokemon-description span {
+  font-size: 16px;
+  padding: 3px 5px;
+  border-radius: 15px;
+  background-color: lightgray;
 }
 
 .add_btn,

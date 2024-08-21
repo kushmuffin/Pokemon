@@ -109,6 +109,29 @@ const PokemonList = () => {
     setSelectedPokemon(null); // 關閉對話框
   };
 
+  const typeColors = {
+      "normal": "#A8A77A",
+      "fighting": "#C22E28",
+      "flying": "#A98FF3",
+      "poison": "#A33EA1",
+      "ground": "#E2BF65",
+      "rock": "#B6A136",
+      "bug": "#A6B91A",
+      "ghost": "#735797",
+      "steel": "#B7B7CE",
+      "fire": "#EE8130",
+      "water": "#6390F0",
+      "grass": "#7AC74C",
+      "electric": "#F7D02C",
+      "psychic": "#F95587",
+      "ice": "#96D9D6",
+      "dragon": "#6F35FC",
+      "dark": "#705746",
+      "fairy": "#D685AD",
+      "stellar": "#D8A6FF",
+      "unknown": "#68A090"
+    }
+
   return (
     <div>
       <h1>Pokemon List</h1>
@@ -127,11 +150,20 @@ const PokemonList = () => {
         <div className='' style={{width: '70rem'}}>
           <div className='pokemon-content'>
             {filteredPokemonDetails.map((pokemon) => (
-              <div className='pokemon-item' key={pokemon.id}>
+              <div 
+                className='pokemon-item' 
+                key={pokemon.id} 
+                style={{ background: pokemon.types.length > 1 
+                ? `linear-gradient(135deg, ${typeColors[pokemon.types[0].type.name]} 40%, ${typeColors[pokemon.types[1].type.name]} 60%)`
+                : typeColors[pokemon.types[0].type.name] }}
+              >
                 <img className='bitimg' src={pokemon.sprites.front_default} alt={pokemon.name} />
-                <div>
+                <div className='pokemon-description'>
                   <span>#{pokemon.id}</span>
                   <span>{pokemon.name}</span>
+                  {pokemon.types.map(typeInfo => (
+                  <span key={typeInfo.type.name}>{typeInfo.type.name}</span>
+                  ))}
                 </div>
                 <div>
                   <button className='detail_btn' onClick={() => handleDetailClick(pokemon)}><span>詳細資料</span></button> {' '}
