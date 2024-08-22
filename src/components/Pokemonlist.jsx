@@ -147,7 +147,7 @@ const PokemonList = () => {
       {filteredPokemonDetails.length === 0 ? (
         <p>Loading...</p>
       ) : (
-        <div className='' style={{width: '70rem'}}>
+        <div className='' style={{width: '80rem'}}>
           <div className='pokemon-content'>
             {filteredPokemonDetails.map((pokemon) => (
               <div 
@@ -161,9 +161,11 @@ const PokemonList = () => {
                 <div className='pokemon-description'>
                   <span>#{pokemon.id}</span>
                   <span>{pokemon.name}</span>
-                  {pokemon.types.map(typeInfo => (
-                  <span key={typeInfo.type.name}>{typeInfo.type.name}</span>
-                  ))}
+                  <div>
+                    {pokemon.types.map(typeInfo => (
+                    <span style={{'font-size': '14px'}} key={typeInfo.type.name}>{typeInfo.type.name}</span>
+                    ))}
+                  </div>
                 </div>
                 <div>
                   <button className='detail_btn' onClick={() => handleDetailClick(pokemon)}><span>詳細資料</span></button> {' '}

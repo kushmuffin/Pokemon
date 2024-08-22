@@ -26,6 +26,15 @@
   width: calc(100% - 250px);
 }
 
+/* TrainerForm */
+.trainerinput {
+  text-wrap: nowrap;
+}
+
+.trainer {
+  background-color: pink;
+}
+
 /* Pokemon */
 .bitimg,
 .artwork {
@@ -135,7 +144,7 @@
   margin: 0.5rem;
   border: none;
   border-bottom: 2px solid lightblue;
-  border-radius: 4px;
+  border-radius: 6px;
   line-height: 2;
   text-align: center;
 }
@@ -184,7 +193,7 @@ tr:hover {
   margin: 0.5rem;
   border: none;
   border-bottom: 2px solid lightblue;
-  border-radius: 4px;
+  border-radius: 6px;
   line-height: 2;
 }
 
