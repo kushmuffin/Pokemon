@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { fetchPokemonList, fetchPokemonDetails } from './PokemonApi'; // 假設 api 文件名為 api.js
 import PokemonDetailDialog from './PokemonDetailDialog';
+import { TrainerContext } from './TrainerContext';
 
 const PokemonList = () => {
   const [pokemonList, setPokemonList] = useState([]);
@@ -10,6 +11,8 @@ const PokemonList = () => {
   const [inputValue, setInputValue] = useState('');
   const [filteredPokemonDetails, setFilteredPokemonDetails] = useState([]);
   const [selectedPokemon, setSelectedPokemon] = useState(null); // 用於儲存被選中的寶可夢
+
+  const { addPokemon } = useContext(TrainerContext); // 使用上下文
 
   useEffect(() => {
     const getPokemonList = async () => {
@@ -97,11 +100,12 @@ const PokemonList = () => {
   };
 
   const handleDetailClick = (pokemon) => {
-    setSelectedPokemon(pokemon); // 設定被選中的寶可夢，打開Dialog
-    //   alert(`Details for ${pokemon.name}`);
+    setSelectedPokemon(pokemon); // 設定被選中的寶可夢，打開Dialog顯示更多資訊
+    // alert(`Details for ${pokemon.name}`);
   };
 
   const handleAddToListClick = (pokemon) => {
+    addPokemon(pokemon);
     alert(`${pokemon.name} added to list`);
   };
 
@@ -110,27 +114,27 @@ const PokemonList = () => {
   };
 
   const typeColors = {
-      "normal": "#A8A77A",
-      "fighting": "#C22E28",
-      "flying": "#A98FF3",
-      "poison": "#A33EA1",
-      "ground": "#E2BF65",
-      "rock": "#B6A136",
-      "bug": "#A6B91A",
-      "ghost": "#735797",
-      "steel": "#B7B7CE",
-      "fire": "#EE8130",
-      "water": "#6390F0",
-      "grass": "#7AC74C",
-      "electric": "#F7D02C",
-      "psychic": "#F95587",
-      "ice": "#96D9D6",
-      "dragon": "#6F35FC",
-      "dark": "#705746",
-      "fairy": "#D685AD",
-      "stellar": "#D8A6FF",
-      "unknown": "#68A090"
-    }
+    "normal": "#A8A77A",
+    "fighting": "#C22E28",
+    "flying": "#A98FF3",
+    "poison": "#A33EA1",
+    "ground": "#E2BF65",
+    "rock": "#B6A136",
+    "bug": "#A6B91A",
+    "ghost": "#735797",
+    "steel": "#B7B7CE",
+    "fire": "#EE8130",
+    "water": "#6390F0",
+    "grass": "#7AC74C",
+    "electric": "#F7D02C",
+    "psychic": "#F95587",
+    "ice": "#96D9D6",
+    "dragon": "#6F35FC",
+    "dark": "#705746",
+    "fairy": "#D685AD",
+    "stellar": "#D8A6FF",
+    "unknown": "#68A090"
+  }
 
   return (
     <div>
@@ -163,7 +167,7 @@ const PokemonList = () => {
                   <span>{pokemon.name}</span>
                   <div>
                     {pokemon.types.map(typeInfo => (
-                    <span style={{'font-size': '14px'}} key={typeInfo.type.name}>{typeInfo.type.name}</span>
+                    <span style={{'fontSize': '14px'}} key={typeInfo.type.name}>{typeInfo.type.name}</span>
                     ))}
                   </div>
                 </div>
