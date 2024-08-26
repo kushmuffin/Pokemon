@@ -19,7 +19,7 @@ p {
 
 a {
   font-weight: 500;
-  color: #646cff;
+  color: black;
   text-decoration: inherit;
 }
 a:hover {
@@ -27,7 +27,6 @@ a:hover {
 }
 
 body {
-  background-color: rgb(239, 239, 239);
   margin: 0;
   display: flex;
   min-width: 320px;

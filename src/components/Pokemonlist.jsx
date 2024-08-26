@@ -137,21 +137,23 @@ const PokemonList = () => {
   }
 
   return (
-    <div>
+    <div className='context'>
       <h1>Pokemon List</h1>
-      {renderPagination()}
-      <input
-        className='enter'
-        type='text'
-        placeholder='輸入名稱'
-        value={inputValue}
-        onChange={handleInputChange}
-      />
-      <button onClick={handleSearch}>搜尋</button>
+      <div>
+        {renderPagination()}
+        <input
+          className='enter'
+          type='text'
+          placeholder='輸入名稱'
+          value={inputValue}
+          onChange={handleInputChange}
+        />
+        <button onClick={handleSearch}>搜尋</button>
+      </div>
       {filteredPokemonDetails.length === 0 ? (
         <p>Loading...</p>
       ) : (
-        <div className='' style={{width: '80rem'}}>
+        <div className=''>
           <div className='pokemon-content'>
             {filteredPokemonDetails.map((pokemon) => (
               <div 

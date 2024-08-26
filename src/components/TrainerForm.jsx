@@ -9,49 +9,40 @@ const TrainerForm = () => {
   const [userName, setUserName] = useState('');
   const [gender, setGender] = useState('');
   const [inputUserName, setInputUserName] = useState('');
-  const [showTrainer, setShowTrainer] = useState(false); // 控制是否顯示訓練師資料
+  const [showTrainer, setShowTrainer] = useState(false);
+  const [trainerData, setTrainerData] = useState([]); // 新增的 State 用來保存所有訓練師資料
   const { addedPokemons } = useContext(TrainerContext);
 
-  // 在組件載入時，從 localStorage 中載入資料
   useEffect(() => {
-    const storedUserName = localStorage.getItem('trainerName');
-    const storedGender = localStorage.getItem('trainerGender');
-    const storedShowTrainer = localStorage.getItem('showTrainer') === 'true';
-
-    if (storedUserName) {
-      setUserName(storedUserName);
-    }
-    if (storedGender) {
-      setGender(storedGender);
-    }
-    setShowTrainer(storedShowTrainer);
+    const storedTrainerData = JSON.parse(localStorage.getItem('trainerData')) || [];
+    setTrainerData(storedTrainerData);
   }, []);
 
   const handleSubmit = (e) => {
-    e.preventDefault(); // 阻止頁面刷新
+    e.preventDefault();
+
+    const newTrainer = {
+      userName: inputUserName,
+      gender: gender,
+      pokemons: addedPokemons,
+    };
+
+    const updatedTrainerData = [...trainerData, newTrainer];
+    setTrainerData(updatedTrainerData);
     setUserName(inputUserName);
-    setShowTrainer(true); // 提交後顯示訓練師資料
+    setShowTrainer(true);
     setInputUserName('');
 
-    // 將資料存儲到 localStorage
-    localStorage.setItem('trainerName', inputUserName);
-    localStorage.setItem('trainerGender', gender);
-    localStorage.setItem('showTrainer', true);
+    localStorage.setItem('trainerData', JSON.stringify(updatedTrainerData));
   };
 
-  const getTrainerImage = () => {
-    if (gender === 'male') {
-      return male_character;
-    } else if (gender === 'female') {
-      return female_character;
-    } else {
-      return null;
-    }
+  const getTrainerImage = (gender) => {
+    return gender === 'male' ? male_character : female_character;
   };
 
   return (
-    <div style={{ padding: '1rem 0', margin: '0 auto' }}>
-      <h2>訓練師資料</h2>
+    <div className='context'>
+      <h1>訓練師資料</h1>
       <form onSubmit={handleSubmit}>
         <div className='trainerinput'>
           <span>名稱:</span>
@@ -63,10 +54,9 @@ const TrainerForm = () => {
             placeholder="Trainer Name"
             required
           />
-        </div>
-        <div className='trainerinput'>
-          性別:
-          <select
+          <span>性別:</span>
+          <select className='enter'
+            style={{ height: '44px' }}
             value={gender}
             onChange={(e) => setGender(e.target.value)}
             required
@@ -75,30 +65,46 @@ const TrainerForm = () => {
             <option value="male">男</option>
             <option value="female">女</option>
           </select>
+          <button type="submit">提交</button>
         </div>
-        <button type="submit">提交</button>
       </form>
       {showTrainer && (
         <div className='trainer'>
-          {getTrainerImage() && (
-            <div>
-              <img src={getTrainerImage()} alt={userName} style={{ width: '100px' }} />
-              <span>訓練師名稱: {userName}</span>
-            </div>
-          )}
-          {/* 顯示已添加的寶可夢列表 */}
-          <div>
-            <h3>已添加的寶可夢列表</h3>
-            {addedPokemons.length === 0 ? (
-              <p>尚未添加寶可夢</p>
-            ) : (
-              <ul>
-                {addedPokemons.map((pokemon, index) => (
-                  <li key={index}>{pokemon.name}</li>
-                ))}
-              </ul>
-            )}
-          </div>
+          <h3>已提交的訓練師資料</h3>
+          <table border="1">
+            <thead>
+              <tr>
+                <th>訓練師名稱</th>
+                <th>性別</th>
+                <th>寶可夢</th>
+              </tr>
+            </thead>
+            <tbody>
+              {trainerData.map((trainer, index) => (
+                <tr key={index}>
+                  <td>{trainer.userName}</td>
+                  <td>
+                    <img
+                      src={getTrainerImage(trainer.gender)}
+                      alt={trainer.userName}
+                      style={{ width: '50px' }}
+                    />
+                  </td>
+                  <td>
+                    {trainer.pokemons.length === 0 ? (
+                      <p>尚未添加寶可夢</p>
+                    ) : (
+                      <ul>
+                        {trainer.pokemons.map((pokemon, idx) => (
+                          <li key={idx}>{pokemon.name}</li>
+                        ))}
+                      </ul>
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       )}
     </div>
