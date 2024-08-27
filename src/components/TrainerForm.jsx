@@ -6,7 +6,7 @@ import male_character from '../assets/male_character.png';
 import female_character from '../assets/female_character.png';
 
 const TrainerForm = () => {
-  const [userName, setUserName] = useState('');
+  // const [userName, setUserName] = useState('');
   const [gender, setGender] = useState('');
   const [inputUserName, setInputUserName] = useState('');
   const [showTrainer, setShowTrainer] = useState(false);
@@ -14,7 +14,7 @@ const TrainerForm = () => {
   const { addedPokemons } = useContext(TrainerContext);
 
   useEffect(() => {
-    const storedTrainerData = JSON.parse(localStorage.getItem('trainerData')) || [];
+    const storedTrainerData = JSON.parse(localStorage.getItem('trainerData')) || []; // 讀取訓練師暫存
     setTrainerData(storedTrainerData);
   }, []);
 
@@ -33,7 +33,7 @@ const TrainerForm = () => {
     setShowTrainer(true);
     setInputUserName('');
 
-    localStorage.setItem('trainerData', JSON.stringify(updatedTrainerData));
+    localStorage.setItem('trainerData', JSON.stringify(updatedTrainerData)); // 訓練師暫存
   };
 
   const getTrainerImage = (gender) => {
@@ -43,32 +43,34 @@ const TrainerForm = () => {
   return (
     <div className='context'>
       <h1>訓練師資料</h1>
-      <form onSubmit={handleSubmit}>
-        <div className='trainerinput'>
-          <span>名稱:</span>
-          <input
-            type="text"
-            className='enter'
-            value={inputUserName}
-            onChange={(e) => setInputUserName(e.target.value)}
-            placeholder="Trainer Name"
-            required
-          />
-          <span>性別:</span>
-          <select className='enter'
-            style={{ height: '44px' }}
-            value={gender}
-            onChange={(e) => setGender(e.target.value)}
-            required
-          >
-            <option value="">選擇性別</option>
-            <option value="male">男</option>
-            <option value="female">女</option>
-          </select>
-          <button type="submit">提交</button>
-        </div>
-      </form>
-      {showTrainer && (
+      {!showTrainer && (
+        <form onSubmit={handleSubmit}>
+          <div className='trainerinput'>
+            <span>名稱:</span>
+            <input
+              type="text"
+              className='enter'
+              value={inputUserName}
+              onChange={(e) => setInputUserName(e.target.value)}
+              placeholder="Trainer Name"
+              required
+            />
+            <span>性別:</span>
+            <select className='enter'
+              style={{ height: '44px' }}
+              value={gender}
+              onChange={(e) => setGender(e.target.value)}
+              required
+            >
+              <option value="">選擇性別</option>
+              <option value="male">男</option>
+              <option value="female">女</option>
+            </select>
+            <button type="submit">提交</button>
+          </div>
+        </form>
+      )}
+        {showTrainer && (
         <div className='trainer'>
           <h3>已提交的訓練師資料</h3>
           <table border="1">
