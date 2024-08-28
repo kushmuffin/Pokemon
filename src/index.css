@@ -13,6 +13,10 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+#root {
+  width: 100%;
+}
+
 p {
   margin-bottom: 0rem;
 }
@@ -68,7 +72,7 @@ input {
     background-color: #ffffff;
   }
   a:hover {
-    color: #747bff;
+    color: #537591;
   }
   button {
     background-color: #d3d3d3;

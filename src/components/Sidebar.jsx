@@ -9,17 +9,17 @@ const Sidebar = () => {
     <aside className='aside'>
       <div className='sidebar'>
         <h2>Sidebar</h2>
-        <div className='sidebar-content'>
-          <div>
-            <p>
-              <Link to="/trainer-form">訓練師資料</Link>
-            </p>
-            <p>
-              <Link to="/pokemon-list">寶可夢列表</Link>
-            </p>
-            <p>
-              <Link to="/pokemon-list">寶可夢列表</Link>
-            </p>
+        <div className='sidebar-area'>
+          <div className='sidebar-content'>
+            <Link className='sidebar-item'to="/trainer-form">
+              <span>訓練師資料</span>
+            </Link>
+            <Link className='sidebar-item'to="/pokemon-list">
+              <span>寶可夢列表</span>
+            </Link>
+            <Link className='sidebar-item'to="/pokemon-list">
+              <span>寶可夢列表</span>
+            </Link>
           </div>
           <div className='sidebar-link'>
             <a href="https://tw.portal-pokemon.com/">

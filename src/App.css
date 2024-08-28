@@ -1,3 +1,17 @@
+/* App.css */
+.app-container {
+  display: flex;
+}
+
+.context {
+  padding: 1rem;
+  text-align: center;
+}
+
+main {
+  flex: 1;
+}
+
 /* Sidebar */
 .aside {
   position: sticky;
@@ -17,11 +31,29 @@
   box-Shadow: 2px 0 5px rgba(0,0,0,0.1)
 }
 
-.sidebar-content {
+.sidebar-area {
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+
+.sidebar-content {
+  display: flex;
+  gap: 5px;
+  flex-direction: column;
+}
+
+.sidebar-item {
+  background-color: #fcdede;
+  border-radius: 0 10px 10px 0;
+  display: inline-block;
+  transition: transform 0.3s ease;
+  position: relative;
+}
+
+.sidebar-item:hover {
+  transform: translateX(10px); /* 懸停時向右移動10px */
 }
 
 .sidebar-link {
@@ -34,15 +66,6 @@
   width: 180px
 }
 
-/* App.css */
-.app-container {
-  display: flex;
-}
-
-.context {
-  padding: 1rem;
-  text-align: center;
-}
 
 /* TrainerForm */
 .trainerinput {

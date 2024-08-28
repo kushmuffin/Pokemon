@@ -6,7 +6,7 @@ import male_character from '../assets/male_character.png';
 import female_character from '../assets/female_character.png';
 
 const TrainerForm = () => {
-  // const [userName, setUserName] = useState('');
+  const [userName, setUserName] = useState('');
   const [gender, setGender] = useState('');
   const [inputUserName, setInputUserName] = useState('');
   const [showTrainer, setShowTrainer] = useState(false);
