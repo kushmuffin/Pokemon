@@ -6,6 +6,7 @@ import Header from './components/Header';
 import Sidebar from './components/Sidebar'; // 引入組件
 import TrainerForm from './components/TrainerForm'; // 引入組件
 import PokemonList from './components/PokemonList'; // 引入組件
+import Area from './components/Area'; // 引入組件
 
 import './App.css'
 
@@ -23,6 +24,7 @@ function App() {
             <Routes>
               <Route path="/trainer-form" element={<TrainerForm />} />
               <Route path="/pokemon-list" element={<PokemonList />} />
+              <Route path="/area" element={<Area />} />
             </Routes>
           </main>
         </div>

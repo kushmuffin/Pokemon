@@ -17,8 +17,8 @@ const Sidebar = () => {
             <Link className='sidebar-item'to="/pokemon-list">
               <span>寶可夢列表</span>
             </Link>
-            <Link className='sidebar-item'to="/pokemon-list">
-              <span>寶可夢列表</span>
+            <Link className='sidebar-item'to="/area">
+              <span>地區地圖</span>
             </Link>
           </div>
           <div className='sidebar-link'>

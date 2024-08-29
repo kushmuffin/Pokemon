@@ -3,6 +3,11 @@ import { fetchPokemonList, fetchPokemonDetails } from './PokemonApi'; // 假設 
 import PokemonDetailDialog from './PokemonDetailDialog';
 import { TrainerContext } from './TrainerContext';
 
+import typeTranslations from '../typeTranslations';
+import { generation1, generation2, generation3, generation4, generation5 } from '../typeTranslations';
+
+
+
 const PokemonList = () => {
   const [pokemonList, setPokemonList] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -13,6 +18,8 @@ const PokemonList = () => {
   const [selectedPokemon, setSelectedPokemon] = useState(null); // 用於儲存被選中的寶可夢
 
   const { addPokemon } = useContext(TrainerContext); // 使用上下文
+
+  const allTranslations = { ...generation1, ...generation2, ...generation3, ...generation4, ...generation5 }; // 翻譯寶可夢名稱
 
   useEffect(() => {
     const getPokemonList = async () => {
@@ -30,8 +37,10 @@ const PokemonList = () => {
   useEffect(() => {
     const getPokemonDetails = async () => {
       try {
+        const start = generations[currentPage].start;
+        const end = generations[currentPage].end;
         const details = await Promise.all(
-          pokemonList.map(async (pokemon) => {
+          pokemonList.slice(start, end).map(async (pokemon) => {
             try {
               const detail = await fetchPokemonDetails(pokemon.url);
               return detail;
@@ -53,7 +62,7 @@ const PokemonList = () => {
     if (pokemonList.length > 0) {
       getPokemonDetails();
     }
-  }, [pokemonList]);
+  }, [pokemonList, currentPage]);
 
   //控制世代、顯示數量
   const generations = {
@@ -66,9 +75,6 @@ const PokemonList = () => {
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
-    const start = generations[page].start;
-    const end = generations[page].end;
-    setFilteredPokemonDetails(pokemonDetails.slice(start, end));
   };
 
   const renderPagination = () => {
@@ -153,33 +159,31 @@ const PokemonList = () => {
       {filteredPokemonDetails.length === 0 ? (
         <p>Loading...</p>
       ) : (
-        <div className=''>
-          <div className='pokemon-content'>
-            {filteredPokemonDetails.map((pokemon) => (
-              <div 
-                className='pokemon-item' 
-                key={pokemon.id} 
-                style={{ background: pokemon.types.length > 1 
-                ? `linear-gradient(135deg, ${typeColors[pokemon.types[0].type.name]} 40%, ${typeColors[pokemon.types[1].type.name]} 60%)`
-                : typeColors[pokemon.types[0].type.name] }}
-              >
-                <img className='bitimg' src={pokemon.sprites.front_default} alt={pokemon.name} />
-                <div className='pokemon-description'>
-                  <span>#{pokemon.id}</span>
-                  <span>{pokemon.name}</span>
-                  <div>
-                    {pokemon.types.map(typeInfo => (
-                    <span style={{'fontSize': '14px'}} key={typeInfo.type.name}>{typeInfo.type.name}</span>
-                    ))}
-                  </div>
-                </div>
+        <div className='pokemon-content'>
+          {filteredPokemonDetails.map((pokemon) => (
+            <div 
+              className='pokemon-item' 
+              key={pokemon.id} 
+              style={{ background: pokemon.types.length > 1 
+              ? `linear-gradient(135deg, ${typeColors[pokemon.types[0].type.name]} 40%, ${typeColors[pokemon.types[1].type.name]} 60%)`
+              : typeColors[pokemon.types[0].type.name] }}
+            >
+              <img className='bitimg' src={pokemon.sprites.front_default} alt={pokemon.name} />
+              <div className='pokemon-description'>
+                <span>#{pokemon.id}</span>
+                <span>{allTranslations[pokemon.name] || pokemon.name}</span>
                 <div>
-                  <button className='detail_btn' onClick={() => handleDetailClick(pokemon)}><span>詳細資料</span></button> {' '}
-                  <button className='add_btn' onClick={() => handleAddToListClick(pokemon)}><span>加入列表</span></button>
+                  {pokemon.types.map(typeInfo => (
+                  <span style={{'fontSize': '14px'}} key={typeInfo.type.name}>{typeTranslations[typeInfo.type.name] || typeInfo.type.name}</span>
+                  ))}
                 </div>
               </div>
-            ))}
-          </div>
+              <div>
+                <button className='detail_btn' onClick={() => handleDetailClick(pokemon)}><span>詳細資料</span></button> {' '}
+                <button className='add_btn' onClick={() => handleAddToListClick(pokemon)}><span>加入列表</span></button>
+              </div>
+            </div>
+          ))}
         </div>
       )}
 
