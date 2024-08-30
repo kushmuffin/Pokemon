@@ -10,13 +10,13 @@ const TrainerForm = () => {
   const [gender, setGender] = useState('');
   const [inputUserName, setInputUserName] = useState('');
   const [showTrainer, setShowTrainer] = useState(false);
-  const [trainerData, setTrainerData] = useState([]); // 新增的 State 用來保存所有訓練師資料
-  const { addedPokemons } = useContext(TrainerContext);
+  const { addedPokemons, addTrainer, trainerData } = useContext(TrainerContext);
 
   useEffect(() => {
-    const storedTrainerData = JSON.parse(localStorage.getItem('trainerData')) || []; // 讀取訓練師暫存
-    setTrainerData(storedTrainerData);
-  }, []);
+    if (trainerData.length > 0) {
+      setShowTrainer(true);
+    }
+  }, [trainerData]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -27,13 +27,13 @@ const TrainerForm = () => {
       pokemons: addedPokemons,
     };
 
-    const updatedTrainerData = [...trainerData, newTrainer];
-    setTrainerData(updatedTrainerData);
+    // const updatedTrainerData = [...trainerData, newTrainer];
+    addTrainer(newTrainer); // 使用上下文方法來更新訓練師資料
     setUserName(inputUserName);
     setShowTrainer(true);
     setInputUserName('');
 
-    localStorage.setItem('trainerData', JSON.stringify(updatedTrainerData)); // 訓練師暫存
+    localStorage.setItem('trainerData', JSON.stringify([...trainerData, newTrainer])); // 訓練師暫存
   };
 
   const getTrainerImage = (gender) => {

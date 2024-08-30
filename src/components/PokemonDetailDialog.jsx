@@ -24,8 +24,8 @@ const PokemonDetailDialog = ({ pokemon, onClose }) => {
         <img className='artwork' src={pokemon.sprites?.other?.['official-artwork']?.front_default} alt={pokemon.name} />
         <p>編號: {pokemon.id}</p>
         <p>特性: {translatedAbilities}</p>
-        <p>高度: {pokemon.height}</p>
-        <p>重量: {pokemon.weight}</p>
+        <span>高度: {pokemon.height}</span>{' '}
+        <span>重量: {pokemon.weight}</span>
         <p>基礎經驗值: {pokemon.base_experience}</p>
         <table>
           <thead>

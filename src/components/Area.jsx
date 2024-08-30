@@ -16,11 +16,11 @@ const Area = () => {
   return (
     <div className='context'>
       <div>
-        <button onClick={() => handleButtonClick(LPLE)}>紅／綠 地圖</button>
-        <button onClick={() => handleButtonClick(HGSS)}>金／銀 地圖</button>
-        <button onClick={() => handleButtonClick(ORAS)}>紅寶石／藍寶石 地圖</button>
-        <button onClick={() => handleButtonClick(BDSP)}>鑽石／珍珠 地圖</button>
-        <button onClick={() => handleButtonClick(B2W2)}>黑／白 地圖</button>
+        <button onClick={() => handleButtonClick(LPLE)}>關都 (紅／綠)</button>
+        <button onClick={() => handleButtonClick(HGSS)}>城都 (金／銀)</button>
+        <button onClick={() => handleButtonClick(ORAS)}>豐緣 (紅寶石／藍寶石)</button>
+        <button onClick={() => handleButtonClick(BDSP)}>神奧 (鑽石／珍珠)</button>
+        <button onClick={() => handleButtonClick(B2W2)}>合眾 (黑／白)</button>
       </div>
       <hr />
       <div className='area-display'>
