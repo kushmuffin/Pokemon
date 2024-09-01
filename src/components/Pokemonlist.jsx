@@ -163,7 +163,7 @@ const PokemonList = () => {
           {filteredPokemonDetails.map((pokemon) => (
             <div 
               className='pokemon-item' 
-              key={pokemon.id} 
+              key={pokemon.id}
               style={{ background: pokemon.types.length > 1 
               ? `linear-gradient(135deg, ${typeColors[pokemon.types[0].type.name]} 40%, ${typeColors[pokemon.types[1].type.name]} 60%)`
               : typeColors[pokemon.types[0].type.name] }}
