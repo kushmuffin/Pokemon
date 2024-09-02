@@ -30,18 +30,24 @@ const Sidebar = () => {
             {trainerData.length === 0 ? (
               <p>沒有訓練師資料</p>
             ) : (
-              <ul>
+              <div>
                 {trainerData.map((trainer, index) => (
-                  <li key={index}>
+                  <div key={index}>
                     <img
                       src={trainer.gender === 'male' ? male_character : female_character}
                       alt={trainer.userName}
                       style={{ width: '30px', marginRight: '10px' }}
                     />
                     {trainer.userName}
-                  </li>
+                    <div>
+                      {trainer.pokemons.map((pokemon, idx) => (
+                        // {/* <p key={idx}>{pokemon.name}</p> */}
+                        <img className='bitimg' onClick={() => handleDetailClick(pokemon)} src={pokemon.sprites.front_default} alt={pokemon.name}   style={{ width: '70px'}}/>
+                      ))}
+                    </div>
+                  </div>
                 ))}
-              </ul>
+              </div>
             )}
             <div className='sidebar-link'>
               <a href="https://tw.portal-pokemon.com/">

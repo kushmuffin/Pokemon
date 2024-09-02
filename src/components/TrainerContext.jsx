@@ -18,7 +18,25 @@ export const TrainerProvider = ({ children }) => {
   };
 
   const addPokemon = (pokemon) => {
-    setAddedPokemons([...addedPokemons, pokemon]);
+    const currentTrainer = trainerData[trainerData.length - 1]; // 假設只有一個訓練師
+
+    if (!addedPokemons.find(p => p.id === pokemon.id)) {
+      const updatedPokemons = [...addedPokemons, pokemon];
+      setAddedPokemons(updatedPokemons);
+
+      // 更新當前訓練師的寶可夢列表
+      const updatedTrainer = { ...currentTrainer, pokemons: updatedPokemons };
+      const updatedTrainerData = [
+        ...trainerData.slice(0, trainerData.length - 1),
+        updatedTrainer
+      ];
+
+      setTrainerData(updatedTrainerData);
+      // 將更新後的訓練師數據保存到 localStorage
+      localStorage.setItem('trainerData', JSON.stringify(updatedTrainerData));
+    } else {
+      alert(`${pokemon.name} 已經在列表中`);
+    }
   };
 
   return (

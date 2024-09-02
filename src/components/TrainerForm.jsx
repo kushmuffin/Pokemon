@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { TrainerContext } from './TrainerContext';
+import PokemonDetailDialog from './PokemonDetailDialog';
+
 
 // 訓練師圖片
 import male_character from '../assets/male_character.png';
@@ -11,6 +13,9 @@ const TrainerForm = () => {
   const [inputUserName, setInputUserName] = useState('');
   const [showTrainer, setShowTrainer] = useState(false);
   const { addedPokemons, addTrainer, trainerData } = useContext(TrainerContext);
+
+  const [selectedPokemon, setSelectedPokemon] = useState(null); // 用於儲存被選中的寶可夢
+
 
   useEffect(() => {
     if (trainerData.length > 0) {
@@ -39,6 +44,16 @@ const TrainerForm = () => {
   const getTrainerImage = (gender) => {
     return gender === 'male' ? male_character : female_character;
   };
+
+  const handleDetailClick = (pokemon) => {
+    setSelectedPokemon(pokemon); // 設定被選中的寶可夢，打開Dialog顯示更多資訊
+    // alert(`Details for ${pokemon.name}`);
+  };
+  
+  const handleCloseDialog = () => {
+    setSelectedPokemon(null); // 關閉對話框
+  };
+
 
   return (
     <div className='context'>
@@ -96,11 +111,14 @@ const TrainerForm = () => {
                     {trainer.pokemons.length === 0 ? (
                       <p>尚未添加寶可夢</p>
                     ) : (
-                      <ul>
+                      <div>
                         {trainer.pokemons.map((pokemon, idx) => (
-                          <li key={idx}>{pokemon.name}</li>
+                          <>
+                            {/* <p key={idx}>{pokemon.name}</p> */}
+                            <img className='bitimg' onClick={() => handleDetailClick(pokemon)} src={pokemon.sprites.front_default} alt={pokemon.name} />
+                          </>
                         ))}
-                      </ul>
+                      </div>
                     )}
                   </td>
                 </tr>
@@ -108,6 +126,13 @@ const TrainerForm = () => {
             </tbody>
           </table>
         </div>
+      )}
+      {/* 新增 PokemonDetailDialog */}
+      {selectedPokemon && (
+        <PokemonDetailDialog 
+          pokemon={selectedPokemon} 
+          onClose={handleCloseDialog} 
+        />
       )}
     </div>
   );
