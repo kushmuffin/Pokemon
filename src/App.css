@@ -59,6 +59,10 @@ main {
   transform: translateX(10px); /* 懸停時向右移動10px */
 }
 
+.sidebartrainer{
+  text-align: center;
+}
+
 .sidebar-link {
   align-self: center;
   width: 180px;
