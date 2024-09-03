@@ -5,8 +5,10 @@ import Login from './components/Login';
 import Header from './components/Header';
 import Sidebar from './components/Sidebar'; // 引入組件
 import TrainerForm from './components/TrainerForm'; // 引入組件
-import PokemonList from './components/PokemonList'; // 引入組件
+import Pokemon from './components/PokemonList'; // 引入組件
 import Area from './components/Area'; // 引入組件
+import Abilities from './components/AbilitiesList'; // 引入組件
+import Moves from './components/MovesList'; // 引入組件
 
 import './App.css'
 
@@ -22,9 +24,11 @@ function App() {
           <Header />
           <main>
             <Routes>
-              <Route path="/trainer-form" element={<TrainerForm />} />
-              <Route path="/pokemon-list" element={<PokemonList />} />
+              <Route path="/trainerform" element={<TrainerForm />} />
+              <Route path="/pokemonlist" element={<Pokemon />} />
               <Route path="/area" element={<Area />} />
+              <Route path="/abilities" element={<Abilities />} />
+              <Route path="/moves" element={<Moves />} />
             </Routes>
           </main>
         </div>

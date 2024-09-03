@@ -96,6 +96,12 @@ const PokemonList = () => {
     console.log('Input value:', e.target.value);
   };
 
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      handleSearch();
+    }
+  };
+
   const handleSearch = () => {
     console.log('Input value at search:', inputValue);
     const filtered = pokemonDetails.filter(pokemon =>
@@ -153,6 +159,7 @@ const PokemonList = () => {
           placeholder='輸入名稱'
           value={inputValue}
           onChange={handleInputChange}
+          onKeyDown={handleKeyDown} // 添加 onKeyDown 事件处理程序
         />
         <button onClick={handleSearch}>搜尋</button>
       </div>
@@ -171,7 +178,8 @@ const PokemonList = () => {
               <img className='bitimg' src={pokemon.sprites.front_default} alt={pokemon.name} />
               <div className='pokemon-description'>
                 <span>#{pokemon.id}</span>
-                <span>{allTranslations[pokemon.name] || pokemon.name}</span>
+                {/* <span>{allTranslations[pokemon.name] || pokemon.name}</span> */}
+                <span>{pokemon.name}</span>
                 <div>
                   {pokemon.types.map(typeInfo => (
                   <span style={{'fontSize': '14px'}} key={typeInfo.type.name}>{typeTranslations[typeInfo.type.name] || typeInfo.type.name}</span>

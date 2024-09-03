@@ -2,7 +2,6 @@ import React, { useState, useEffect, useContext } from 'react';
 import { TrainerContext } from './TrainerContext';
 import PokemonDetailDialog from './PokemonDetailDialog';
 
-
 // 訓練師圖片
 import male_character from '../assets/male_character.png';
 import female_character from '../assets/female_character.png';
@@ -12,10 +11,10 @@ const TrainerForm = () => {
   const [gender, setGender] = useState('');
   const [inputUserName, setInputUserName] = useState('');
   const [showTrainer, setShowTrainer] = useState(false);
-  const { addedPokemons, addTrainer, trainerData } = useContext(TrainerContext);
+  const [editingTrainer, setEditingTrainer] = useState(null); // 用於存儲當前正在編輯的訓練師
+  const { addedPokemons, addTrainer, trainerData, updateTrainer } = useContext(TrainerContext);
 
   const [selectedPokemon, setSelectedPokemon] = useState(null); // 用於儲存被選中的寶可夢
-
 
   useEffect(() => {
     if (trainerData.length > 0) {
@@ -23,22 +22,33 @@ const TrainerForm = () => {
     }
   }, [trainerData]);
 
+  useEffect(() => {
+    if (editingTrainer !== null) {
+      const trainer = trainerData[editingTrainer];
+      setInputUserName(trainer.userName);
+      setGender(trainer.gender);
+    }
+  }, [editingTrainer, trainerData]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const newTrainer = {
-      userName: inputUserName,
-      gender: gender,
-      pokemons: addedPokemons,
-    };
+    if (editingTrainer !== null) {
+      handleTrainerUpdate(editingTrainer); // 如果正在編輯，調用更新函式
+    } else {
+      const newTrainer = {
+        userName: inputUserName,
+        gender: gender,
+        pokemons: addedPokemons,
+      };
 
-    // const updatedTrainerData = [...trainerData, newTrainer];
-    addTrainer(newTrainer); // 使用上下文方法來更新訓練師資料
-    setUserName(inputUserName);
-    setShowTrainer(true);
-    setInputUserName('');
+      addTrainer(newTrainer); // 使用 useContext 更新訓練師資料
+      setUserName(inputUserName);
+      setShowTrainer(true);
+      setInputUserName('');
 
-    localStorage.setItem('trainerData', JSON.stringify([...trainerData, newTrainer])); // 訓練師暫存
+      // 不需要再存储在 localStorage，因为 addTrainer 已经处理
+    }
   };
 
   const getTrainerImage = (gender) => {
@@ -47,13 +57,31 @@ const TrainerForm = () => {
 
   const handleDetailClick = (pokemon) => {
     setSelectedPokemon(pokemon); // 設定被選中的寶可夢，打開Dialog顯示更多資訊
-    // alert(`Details for ${pokemon.name}`);
   };
   
   const handleCloseDialog = () => {
     setSelectedPokemon(null); // 關閉對話框
   };
 
+  const handleTrainerUpdate = (index) => {
+    const updatedTrainer = {
+      ...trainerData[index],
+      userName: inputUserName,
+      gender: gender,
+      pokemons: trainerData[index].pokemons, // 保持已有的寶可夢不變
+    };
+
+    updateTrainer(index, updatedTrainer); // 调用 context 提供的函数来更新数据
+    setEditingTrainer(null);
+    setInputUserName('');
+    setGender('');
+  };
+
+  const handleEditClick = (trainer, index) => {
+    setEditingTrainer(index);
+    setInputUserName(trainer.userName);
+    setGender(trainer.gender);
+  };
 
   return (
     <div className='context'>
@@ -81,11 +109,11 @@ const TrainerForm = () => {
               <option value="male">男</option>
               <option value="female">女</option>
             </select>
-            <button type="submit">提交</button>
+            <button type="submit">{editingTrainer !== null ? '更新' : '提交'}</button>
           </div>
         </form>
       )}
-        {showTrainer && (
+      {showTrainer && (
         <div className='trainer'>
           <h3>已提交的訓練師資料</h3>
           <table border="1">
@@ -94,18 +122,39 @@ const TrainerForm = () => {
                 <th>訓練師名稱</th>
                 <th>性別</th>
                 <th>寶可夢</th>
+                <th>其他</th>
               </tr>
             </thead>
             <tbody>
               {trainerData.map((trainer, index) => (
                 <tr key={index}>
-                  <td>{trainer.userName}</td>
                   <td>
-                    <img
-                      src={getTrainerImage(trainer.gender)}
-                      alt={trainer.userName}
-                      style={{ width: '50px' }}
-                    />
+                    {editingTrainer === index ? (
+                      <input
+                        type="text"
+                        value={inputUserName}
+                        onChange={(e) => setInputUserName(e.target.value)}
+                      />
+                    ) : (
+                      trainer.userName
+                    )}
+                  </td>
+                  <td>
+                    {editingTrainer === index ? (
+                      <select
+                        value={gender}
+                        onChange={(e) => setGender(e.target.value)}
+                      >
+                        <option value="male">男</option>
+                        <option value="female">女</option>
+                      </select>
+                    ) : (
+                      <img
+                        src={getTrainerImage(trainer.gender)}
+                        alt={trainer.userName}
+                        style={{ width: '50px' }}
+                      />
+                    )}
                   </td>
                   <td>
                     {trainer.pokemons.length === 0 ? (
@@ -113,12 +162,22 @@ const TrainerForm = () => {
                     ) : (
                       <div>
                         {trainer.pokemons.map((pokemon, idx) => (
-                          <>
-                            {/* <p key={idx}>{pokemon.name}</p> */}
-                            <img className='bitimg' onClick={() => handleDetailClick(pokemon)} src={pokemon.sprites.front_default} alt={pokemon.name} />
-                          </>
+                          <img
+                            className='bitimg'
+                            onClick={() => handleDetailClick(pokemon)}
+                            src={pokemon.sprites.front_default}
+                            alt={pokemon.name}
+                            key={idx}
+                          />
                         ))}
                       </div>
+                    )}
+                  </td>
+                  <td>
+                    {editingTrainer === index ? (
+                      <button onClick={() => handleTrainerUpdate(index)}>保存</button>
+                    ) : (
+                      <button onClick={() => handleEditClick(trainer, index)}>編輯</button>
                     )}
                   </td>
                 </tr>
