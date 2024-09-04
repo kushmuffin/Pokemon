@@ -14,14 +14,23 @@ const Moves = () => {
 
   return (
     <div>
-      <h1>所有寶可夢招式 (繁體中文)</h1>
-      <ul>
-        {moves.map((move, index) => (
-          <li key={index}>
-            {move.name}: {move.translatedEffect}
-          </li>
-        ))}
-      </ul>
+      <h1>寶可夢招式</h1>
+      <table>
+        <thead>
+            <tr>
+              <th>招式</th>
+              <th>說明</th>
+            </tr>
+          </thead>
+        <tbody>
+          {moves.map((move, index) => (
+            <tr key={index}>
+              <td>{move.name}</td>
+              <td>{move.translatedEffect}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 };

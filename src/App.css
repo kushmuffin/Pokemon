@@ -1,4 +1,4 @@
-/* App.css */
+/* ------------------------------------------------- App.css ------------------------------------------------- */
 .app-container {
   display: flex;
 }
@@ -15,7 +15,7 @@ main {
   flex: 1;
 }
 
-/* Sidebar */
+/* ------------------------------------------------- Sidebar ------------------------------------------------- */
 .aside {
   position: sticky;
   height: 100vh;
@@ -48,15 +48,19 @@ main {
 }
 
 .sidebar-item {
+  padding: 0.5rem 1rem;
+  width: 250px;
   background-color: #fcdede;
   border-radius: 0 10px 10px 0;
   display: inline-block;
   transition: transform 0.3s ease;
   position: relative;
+  left: -2rem;
+  text-align-last: end;
 }
 
 .sidebar-item:hover {
-  transform: translateX(10px); /* 懸停時向右移動10px */
+  transform: translateX(1rem); /* 懸停時向右移動1rem */
 }
 
 .sidebartrainer{
@@ -64,8 +68,9 @@ main {
 }
 
 .sidebar-link {
-  align-self: center;
-  width: 180px;
+  text-align: center;
+  /* align-self: center; */
+  /* width: 180px; */
 }
 
 .sidebar-link img {
@@ -74,7 +79,7 @@ main {
 }
 
 
-/* TrainerForm */
+/* ------------------------------------------------- TrainerForm ------------------------------------------------- */
 .trainerinput {
   text-wrap: nowrap;
 }
@@ -97,7 +102,7 @@ main {
   flex-direction: column;
 }
 
-/* Pokemon */
+/* ------------------------------------------------- Pokemon ------------------------------------------------- */
 .bitimg,
 .artwork {
   background-color: #bcbcbc5c;
@@ -119,10 +124,15 @@ main {
 }
 
 .pokemon-description span {
+  margin: 0 5px;
   font-size: 16px;
   padding: 3px 5px;
   border-radius: 15px;
   background-color: lightgray;
+}
+
+.pokemon-item p {
+  font-size: 16px;
 }
 
 .add_btn,
@@ -133,16 +143,30 @@ main {
   box-shadow: 1px 1px 5px 0px gray;
 }
 
-.pokemon-item p {
-  font-size: 16px;
+.pokemon-item .detail_btn {
+  border-radius: 10px 0 0 10px;
+}
+
+.pokemon-item .add_btn {
+  background-color: #c1e7bc;
+  border-radius: 0 10px 10px 0;
 }
 
 .pokemon-item .add_btn,
 .pokemon-item .detail_btn {
   box-shadow: none;
+  transition: transform 0.3s ease;
 }
 
-/* Dialog */
+.detail_btn:hover {
+  transform: translateX(-0.2rem); /* 懸停時向右移動1rem */
+}
+
+.add_btn:hover {
+  transform: translateX(0.2rem); /* 懸停時向右移動1rem */
+}
+
+/* ------------------------------------------------- Dialog ------------------------------------------------- */
 .dialog-overlay {
   position: fixed;
   top: 0;
@@ -164,12 +188,18 @@ main {
   text-align: center;
 }
 
-/* Area */
+/* ------------------------------------------------- Area ------------------------------------------------- */
 .area-display{
   width: 70%;
 }
 
+.area-img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
 
+/* ------------------------------------------------- Other ------------------------------------------------- */
 .nation_list {
   margin: 1vh 0;
 }
@@ -221,8 +251,8 @@ main {
   border-bottom: 2px solid rgb(122, 166, 181);
 }
 
-.add_btn {
-  background-color: #c1e7bc;
+table {
+  border: none;
 }
 
 table {

@@ -25,7 +25,7 @@ const Area = () => {
       <hr />
       <div className='area-display'>
         {selectedMap ? (
-          <img src={selectedMap} alt="選中的地區地圖" style={{ width: '100%', height: 'auto' }} />
+          <img className='area-img' src={selectedMap} alt="選中的地區地圖" />
         ) : (
           <p>請選擇一個地區來顯示地圖</p>
         )}

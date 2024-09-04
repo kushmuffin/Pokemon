@@ -83,7 +83,7 @@ const PokemonList = () => {
     const generation = ['紅／綠', '金／銀', '紅寶石／藍寶石', '鑽石／珍珠', '黑／白' ]
     for (let i = 1; i <= totalPages; i++) {
       buttons.push(
-        <button key={i} onClick={() => handlePageChange(i)}>
+        <button key={i} onClick={() => handlePageChange(i)} style={{margin: "3px"}}>
           {generation[i - 1]}
         </button>
       );
@@ -187,7 +187,7 @@ const PokemonList = () => {
                 </div>
               </div>
               <div>
-                <button className='detail_btn' onClick={() => handleDetailClick(pokemon)}><span>詳細資料</span></button> {' '}
+                <button className='detail_btn' onClick={() => handleDetailClick(pokemon)}><span>詳細資料</span></button>
                 <button className='add_btn' onClick={() => handleAddToListClick(pokemon)}><span>加入列表</span></button>
               </div>
             </div>
