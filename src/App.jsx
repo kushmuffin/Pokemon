@@ -19,11 +19,12 @@ function App() {
   return (
     <TrainerProvider>
       <Router>
-        <div className="App" style={{ display: 'flex', width: '100%' }}>
+        <div className="App">
           <Sidebar />
           <Header />
           <main>
             <Routes>
+              <Route path="/" element={<TrainerForm />} />
               <Route path="/trainerform" element={<TrainerForm />} />
               <Route path="/pokemonlist" element={<Pokemon />} />
               <Route path="/area" element={<Area />} />

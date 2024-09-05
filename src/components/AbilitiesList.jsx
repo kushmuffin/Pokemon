@@ -14,7 +14,7 @@ const Abilities = () => {
   }, []);
 
   return (
-    <div>
+    <div className='context' style={{'text-align': 'justify'}}>
       <h1>寶可夢特性</h1>
       <table>
         <thead>

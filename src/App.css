@@ -3,6 +3,11 @@
   display: flex;
 }
 
+.App {
+  display: flex;
+  width: 100%;
+}
+
 .context {
   padding: 1rem;
   text-align: center;

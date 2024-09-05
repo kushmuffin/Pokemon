@@ -13,7 +13,7 @@ const Moves = () => {
   }, []);
 
   return (
-    <div>
+    <div className='context'>
       <h1>寶可夢招式</h1>
       <table>
         <thead>

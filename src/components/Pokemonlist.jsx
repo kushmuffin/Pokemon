@@ -4,8 +4,6 @@ import PokemonDetailDialog from './PokemonDetailDialog';
 import { TrainerContext } from './TrainerContext';
 
 import typeTranslations from '../typeTranslations';
-import { generation1, generation2, generation3, generation4, generation5 } from '../typeTranslations';
-
 
 
 const PokemonList = () => {
@@ -18,8 +16,6 @@ const PokemonList = () => {
   const [selectedPokemon, setSelectedPokemon] = useState(null); // 用於儲存被選中的寶可夢
 
   const { addPokemon } = useContext(TrainerContext); // 使用上下文
-
-  const allTranslations = { ...generation1, ...generation2, ...generation3, ...generation4, ...generation5 }; // 翻譯寶可夢名稱
 
   useEffect(() => {
     const getPokemonList = async () => {
@@ -70,7 +66,11 @@ const PokemonList = () => {
     2: { start: 151, end: 251 },
     3: { start: 251, end: 386 },
     4: { start: 386, end: 493 },
-    5: { start: 493, end: 649 }
+    5: { start: 493, end: 649 },
+    6: { start: 649, end: 721 },
+    7: { start: 721, end: 809 },
+    8: { start: 809, end: 905 },
+    9: { start: 905, end: 1025 }
   };
 
   const handlePageChange = (page) => {
@@ -80,7 +80,7 @@ const PokemonList = () => {
   const renderPagination = () => {
     const totalPages = Object.keys(generations).length;
     const buttons = [];
-    const generation = ['紅／綠', '金／銀', '紅寶石／藍寶石', '鑽石／珍珠', '黑／白' ]
+    const generation = ['紅／綠', '金／銀', '紅寶石／藍寶石', '鑽石／珍珠', '黑／白', 'X／Y', '太陽／月亮', '劍／盾', '朱／紫' ]
     for (let i = 1; i <= totalPages; i++) {
       buttons.push(
         <button key={i} onClick={() => handlePageChange(i)} style={{margin: "3px"}}>
@@ -150,7 +150,7 @@ const PokemonList = () => {
 
   return (
     <div className='context'>
-      <h1>Pokemon List</h1>
+      <h1>寶可夢列表</h1>
       <div>
         {renderPagination()}
         <input
