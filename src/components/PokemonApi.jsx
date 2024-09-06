@@ -22,7 +22,7 @@ export const fetchPokemonDetails = async (url) => {
   }
 };
 
-// 特性 世代五到 164
+// 特性
 export const fetchAllAbilities = async (limit = 311) => {
   try {
     const response = await axios.get(`${BASE_URL}/ability?limit=${limit}`);

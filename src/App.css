@@ -121,6 +121,15 @@ main {
   justify-content: center;
 }
 
+.gen-button {
+  margin: 0 3px;
+}
+
+.gen-button.active {
+  background-color: #64ade1;
+  color: white;
+}
+
 .pokemon-item {
   padding: 10px;
   width: 11.6rem;
@@ -198,6 +207,19 @@ main {
   width: 70%;
 }
 
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); /* 每行 3 列 */
+  gap: 10px; /* 按鈕之間的間距 */
+  justify-content: center; /* 水平置中 */
+  align-content: center; /* 垂直置中 */
+}
+
+.gen-area-button.active {
+  background-color: #64ade1;
+  color: white;
+}
+
 .area-img {
   width: 100%;
   height: auto;
@@ -205,7 +227,7 @@ main {
 }
 
 /* ------------------------------------------------- Other ------------------------------------------------- */
-.nation_list {
+/* .nation_list {
   margin: 1vh 0;
 }
 
@@ -238,7 +260,7 @@ main {
   color: black;
   flex-wrap: wrap;
   justify-content: center;
-}
+} */
 
 .enter {
   background-color: aliceblue;
