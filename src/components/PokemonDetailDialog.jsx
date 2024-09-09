@@ -1,9 +1,19 @@
 import React from 'react';
-import { ability, generation1, generation2, generation3, generation4, generation5 } from '../typeTranslations';// 匯入翻譯檔
+import { ability, generation1, generation2, generation3, generation4, generation5, generation6, generation7, generation8, generation9 } from '../typeTranslations'; //翻譯檔
 
 
 const PokemonDetailDialog = ({ pokemon, onClose }) => {
-  const allTranslations = { ...generation1, ...generation2, ...generation3, ...generation4, ...generation5 }; // 翻譯寶可夢名稱
+  const allTranslations = {
+    ...generation1,
+    ...generation2,
+    ...generation3,
+    ...generation4,
+    ...generation5,
+    ...generation6,
+    ...generation7,
+    ...generation8,
+    ...generation9
+  }; // 翻譯寶可夢名稱
 
   if (!pokemon) return null; // 如果沒有寶可夢資料則不顯示對話框
 

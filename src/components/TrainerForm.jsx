@@ -131,6 +131,7 @@ const TrainerForm = () => {
                   <td>
                     {editingTrainer === index ? (
                       <input
+                        className='enter'
                         type="text"
                         value={inputUserName}
                         onChange={(e) => setInputUserName(e.target.value)}
@@ -142,8 +143,10 @@ const TrainerForm = () => {
                   <td>
                     {editingTrainer === index ? (
                       <select
+                        className='enter'
                         value={gender}
                         onChange={(e) => setGender(e.target.value)}
+                        style={{padding: '0.4rem'}}
                       >
                         <option value="male">男</option>
                         <option value="female">女</option>

@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const BASE_URL = 'https://pokeapi.co/api/v2';
 // 寶可夢
-export const fetchPokemonList = async (limit = 649) => {
+export const fetchPokemonList = async (limit = 1025) => {
   try {
     const response = await axios.get(`${BASE_URL}/pokemon?limit=${limit}`);
     return response.data.results;
@@ -23,9 +23,9 @@ export const fetchPokemonDetails = async (url) => {
 };
 
 // 特性
-export const fetchAllAbilities = async () => {
+export const fetchAllAbilities = async (limit = 311) => {
   try {
-    const response = await axios.get(`${BASE_URL}/ability?limit=1000`);
+    const response = await axios.get(`${BASE_URL}/ability?limit=${limit}`);
     const abilities = await Promise.all(
       response.data.results.map(async (ability) => {
         const abilityDetails = await axios.get(ability.url);
@@ -42,7 +42,7 @@ export const fetchAllAbilities = async () => {
           const zhHantFlavorTextEntry = abilityDetails.data.flavor_text_entries.find(
             (entry) => entry.language.name === 'zh-Hant'
           );
-          translatedEffect = zhHantFlavorTextEntry ? zhHantFlavorTextEntry.flavor_text : '無中文翻譯';
+          translatedEffect = zhHantFlavorTextEntry ? zhHantFlavorTextEntry.flavor_text : abilityDetails.data.flavor_text_entries[0]?.flavor_text || '無其他翻譯可用';
         }
 
         return {
@@ -60,9 +60,9 @@ export const fetchAllAbilities = async () => {
 
 
 // 招式
-export const fetchAllMove = async () => {
+export const fetchAllMove = async (limit = 559) => {
   try {
-    const response = await axios.get(`${BASE_URL}/move?limit=1000`);
+    const response = await axios.get(`${BASE_URL}/move?limit=${limit}`);
     const moves = await Promise.all(
       response.data.results.map(async (move) => {
         const moveDetails = await axios.get(move.url);

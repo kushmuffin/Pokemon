@@ -5,7 +5,7 @@ import Login from './components/Login';
 import Header from './components/Header';
 import Sidebar from './components/Sidebar'; // 引入組件
 import TrainerForm from './components/TrainerForm'; // 引入組件
-import Pokemon from './components/PokemonList'; // 引入組件
+import Pokemon from './components/Pokemonlist'; // 引入組件
 import Area from './components/Area'; // 引入組件
 import Abilities from './components/AbilitiesList'; // 引入組件
 import Moves from './components/MovesList'; // 引入組件
@@ -19,11 +19,12 @@ function App() {
   return (
     <TrainerProvider>
       <Router>
-        <div className="App" style={{ display: 'flex', width: '100%' }}>
+        <div className="App">
           <Sidebar />
           <Header />
           <main>
             <Routes>
+              <Route path="/" element={<TrainerForm />} />
               <Route path="/trainerform" element={<TrainerForm />} />
               <Route path="/pokemonlist" element={<Pokemon />} />
               <Route path="/area" element={<Area />} />
