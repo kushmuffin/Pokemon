@@ -12,7 +12,7 @@ const PokemonList = () => {
   const [pokemonList, setPokemonList] = useState([]); // 每個寶可夢的詳細資訊(姓名、屬性等)與圖片
 
   const [inputValue, setInputValue] = useState(''); // 搜尋關鍵字
-  const [filteredPokemonDetails, setFilteredPokemonDetails] = useState([]); // 符合關鍵字搜尋條件的寶可夢列表
+  const [filteredPokemon, setFilteredPokemon] = useState([]); // 符合關鍵字搜尋條件的寶可夢列表
   const [selectedPokemon, setSelectedPokemon] = useState(null); // 顯示被選中的寶可夢的詳細資料(Dialog)
 
   const { addPokemon } = useContext(TrainerContext); // 使用上下文
@@ -48,7 +48,7 @@ const PokemonList = () => {
         );
         const validDetails = details.filter(detail => detail !== null); // 過濾掉 null 值（有問題的寶可夢）
         setPokemonList(validDetails); // 初始時顯示寶可夢
-        setFilteredPokemonDetails(validDetails); // 搜尋寶可夢
+        setFilteredPokemon(validDetails); // 搜尋寶可夢
         console.log('Pokemon details fetched:', validDetails);
       } catch (error) {
         console.error('Error fetching Pokemon details:', error);
@@ -59,7 +59,7 @@ const PokemonList = () => {
     // }
   }, [pokemonData, currentPage]);
 
-  //控制世代、顯示數量
+  // 顯示數量，用於按鈕
   const generations = {
     1: { start: 0, end: 151 },
     2: { start: 151, end: 251 },
@@ -76,7 +76,7 @@ const PokemonList = () => {
     setCurrentPage(page);
   };
 
-  const renderPagination = () => {
+  const renderPagination = () => { // 切換世代按鈕
     const totalPages = Object.keys(generations).length;
     const buttons = [];
     const generation = ['紅／綠', '金／銀', '紅寶石／藍寶石', '鑽石／珍珠', '黑／白', 'X／Y', '太陽／月亮', '劍／盾', '朱／紫' ]
@@ -90,15 +90,9 @@ const PokemonList = () => {
     return <div>{buttons}</div>;
   };
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e) => { //搜尋功能
     setInputValue(e.target.value);
     console.log('Input value:', e.target.value);
-  };
-
-  const handleKeyDown = (e) => {
-    if (e.key === 'Enter') {
-      handleSearch();
-    }
   };
 
   const handleSearch = () => {
@@ -107,21 +101,27 @@ const PokemonList = () => {
       pokemon.name?.toLowerCase().includes(inputValue.toLowerCase())
     );
     console.log('Filtered Pokemon:', filtered);
-    setFilteredPokemonDetails(filtered);
+    setFilteredPokemon(filtered);
   };
 
-  const handleDetailClick = (pokemonDetail) => {
-    setSelectedPokemon(pokemonDetail); // 設定被選中的寶可夢，打開Dialog顯示更多資訊
+  const handleKeyDown = (e) => { //Enter輸入搜尋
+    if (e.key === 'Enter') {
+      handleSearch();
+    }
+  };
+
+  const handleDetailClick = (pokemonDetail) => { // 打開PokemonDetailDialog顯示更多資訊
+    setSelectedPokemon(pokemonDetail);
     // alert(`Details for ${pokemon.name}`);
   };
 
-  const handleAddToListClick = (pokemon) => {
+  const handleAddToListClick = (pokemon) => { // 將寶可夢資料加入列表 (TrainerContext)
     addPokemon(pokemon);
     alert(`${pokemon.name} added to list`);
   };
 
-  const handleCloseDialog = () => {
-    setSelectedPokemon(null); // 關閉對話框
+  const handleCloseDialog = () => { // 關閉對話框
+    setSelectedPokemon(null);
   };
 
   const typeColors = {
@@ -158,15 +158,15 @@ const PokemonList = () => {
           placeholder='輸入名稱'
           value={inputValue}
           onChange={handleInputChange}
-          onKeyDown={handleKeyDown} // 添加 onKeyDown 事件处理程序
+          onKeyDown={handleKeyDown} // 添加 onKeyDown 事件，搜尋可用enter輸入搜尋
         />
         <button onClick={handleSearch}>搜尋</button>
       </div>
-      {filteredPokemonDetails.length === 0 ? (
+      {filteredPokemon.length === 0 ? (
         <p>Loading...</p>
       ) : (
         <div className='pokemon-content'>
-          {filteredPokemonDetails.map((pokemon) => (
+          {filteredPokemon.map((pokemon) => (
             <div 
               className='pokemon-item' 
               key={pokemon.id} 
@@ -194,7 +194,15 @@ const PokemonList = () => {
         </div>
       )}
 
-        {/* <table>
+      {/* 新增 PokemonDetailDialog */}
+      {selectedPokemon && (
+        <PokemonDetailDialog 
+          pokemon={selectedPokemon} 
+          onClose={handleCloseDialog} 
+        />
+      )}
+
+        {/* <table style={{'display': 'none'}}>
           <thead>
             <tr>
               <th>編號</th>
@@ -245,14 +253,6 @@ const PokemonList = () => {
             })}
           </tbody>
         </table> */}
-
-      {/* 新增 PokemonDetailDialog */}
-      {selectedPokemon && (
-        <PokemonDetailDialog 
-          pokemon={selectedPokemon} 
-          onClose={handleCloseDialog} 
-        />
-      )}
     </div>
   );
 };

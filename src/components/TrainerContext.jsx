@@ -1,15 +1,23 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useState, useEffect } from 'react';
 
 export const TrainerContext = createContext();
 
 export const TrainerProvider = ({ children }) => {
-  const [trainerData, setTrainerData] = useState(() => {
+  const [trainerData, setTrainerData] = useState(() => { // 訓練家資料
     const storedData = localStorage.getItem('trainerData');
-    return storedData ? JSON.parse(storedData) : [];
+    return storedData ? JSON.parse(storedData) : []; // 沒有訓練家先空陣列
   });
-  const [addedPokemons, setAddedPokemons] = useState([]);
+  const [addedPokemons, setAddedPokemons] = useState([]); // 寶可夢資料
 
-  const addTrainer = (trainer) => {
+  // 在頁面載入或 trainerData 更新後，將最新訓練家的寶可夢同步到 addedPokemons
+  useEffect(() => {
+    if (trainerData.length > 0) {
+      const currentTrainer = trainerData[trainerData.length - 1];
+      setAddedPokemons(currentTrainer.pokemons || []); // 如果 pokemons 存在，則同步，否則設為空陣列
+    }
+  }, [trainerData]);
+
+  const addTrainer = (trainer) => { // 新增訓練家資料
     const updatedTrainerData = [...trainerData, trainer];
     setTrainerData(updatedTrainerData);
     localStorage.setItem('trainerData', JSON.stringify(updatedTrainerData));
@@ -17,18 +25,16 @@ export const TrainerProvider = ({ children }) => {
   };
 
   const addPokemon = (pokemon) => {
-    const currentTrainer = trainerData[trainerData.length - 1];
-
-    if (!addedPokemons.find(p => p.id === pokemon.id)) {
-      const updatedPokemons = [...addedPokemons, pokemon];
+    const currentTrainer = trainerData[trainerData.length - 1]; 
+    if (!addedPokemons.find(p => p.id === pokemon.id)) { // 不要攜帶重複的寶可夢
+      const updatedPokemons = [...addedPokemons, { ...pokemon, id: Date.now() }]; // 添加 id
       setAddedPokemons(updatedPokemons);
-
+      
       const updatedTrainer = { ...currentTrainer, pokemons: updatedPokemons };
       const updatedTrainerData = [
         ...trainerData.slice(0, trainerData.length - 1),
         updatedTrainer
       ];
-
       setTrainerData(updatedTrainerData);
       localStorage.setItem('trainerData', JSON.stringify(updatedTrainerData));
     } else {
