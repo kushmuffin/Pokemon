@@ -12,13 +12,15 @@ const TrainerForm = () => {
   const [inputUserName, setInputUserName] = useState('');
   const [showTrainer, setShowTrainer] = useState(false);
   const [editingTrainer, setEditingTrainer] = useState(null); // 用於存儲當前正在編輯的訓練師
-  const { addedPokemons, addTrainer, trainerData, updateTrainer } = useContext(TrainerContext);
+  const { addedPokemons, addTrainer, trainerData, updateTrainer, deleteTrainerData  } = useContext(TrainerContext);
 
   const [selectedPokemon, setSelectedPokemon] = useState(null); // 用於儲存被選中的寶可夢
 
   useEffect(() => {
     if (trainerData.length > 0) {
       setShowTrainer(true);
+    } else {
+      setShowTrainer(false);
     }
   }, [trainerData]);
 
@@ -46,8 +48,6 @@ const TrainerForm = () => {
       setUserName(inputUserName);
       setShowTrainer(true);
       setInputUserName('');
-
-      // 不需要再存储在 localStorage，因为 addTrainer 已经处理
     }
   };
 
@@ -71,7 +71,7 @@ const TrainerForm = () => {
       pokemons: trainerData[index].pokemons, // 保持已有的寶可夢不變
     };
 
-    updateTrainer(index, updatedTrainer); // 调用 context 提供的函数来更新数据
+    updateTrainer(index, updatedTrainer); // 調用 context 提供的函數來更新數據
     setEditingTrainer(null);
     setInputUserName('');
     setGender('');
@@ -178,9 +178,14 @@ const TrainerForm = () => {
                   </td>
                   <td>
                     {editingTrainer === index ? (
-                      <button onClick={() => handleTrainerUpdate(index)}>保存</button>
+                      <>
+                        <button onClick={() => handleTrainerUpdate(index)}>保存</button>
+                      </>
                     ) : (
-                      <button onClick={() => handleEditClick(trainer, index)}>編輯</button>
+                      <>
+                        <button onClick={() => handleEditClick(trainer, index)}>編輯</button>
+                        <button onClick={() => deleteTrainerData()}>刪除</button>
+                      </>
                     )}
                   </td>
                 </tr>

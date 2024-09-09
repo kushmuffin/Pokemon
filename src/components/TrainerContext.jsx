@@ -49,9 +49,15 @@ export const TrainerProvider = ({ children }) => {
     localStorage.setItem('trainerData', JSON.stringify(updatedTrainerData));
   };
 
+  const deleteTrainerData = () => {
+    setTrainerData([]); // 清空 trainerData 狀態
+    localStorage.removeItem('trainerData'); // 刪除 localStorage 中的資料
+    alert(`已刪除訓練家資料!`);
+  };
+
   return (
-    <TrainerContext.Provider value={{ addedPokemons, addPokemon, trainerData, addTrainer, updateTrainer }}>
-      {children}
+    <TrainerContext.Provider value={{ addedPokemons, addPokemon, trainerData, addTrainer, updateTrainer, deleteTrainerData }}>
+      {children} 
     </TrainerContext.Provider>
   );
 };
