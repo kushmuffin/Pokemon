@@ -24,7 +24,7 @@ export const TrainerProvider = ({ children }) => {
     setAddedPokemons([]);
   };
 
-  const addPokemon = (pokemon) => {
+  const addPokemon = (pokemon) => { // 新增寶可夢
     const currentTrainer = trainerData[trainerData.length - 1]; 
     if (!addedPokemons.find(p => p.id === pokemon.id)) { // 不要攜帶重複的寶可夢
       const updatedPokemons = [...addedPokemons, { ...pokemon, id: Date.now() }]; // 添加 id
@@ -50,7 +50,8 @@ export const TrainerProvider = ({ children }) => {
   };
 
   const deleteTrainerData = () => {
-    setTrainerData([]); // 清空 trainerData 狀態
+    setTrainerData([]); // 清空訓練家
+    setAddedPokemons([]); // 清空寶可夢
     localStorage.removeItem('trainerData'); // 刪除 localStorage 中的資料
     alert(`已刪除訓練家資料!`);
   };

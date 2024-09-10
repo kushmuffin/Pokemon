@@ -7,16 +7,21 @@ import male_character from '../assets/male_character.png';
 import female_character from '../assets/female_character.png';
 
 const TrainerForm = () => {
-  const [userName, setUserName] = useState('');
-  const [gender, setGender] = useState('');
-  const [inputUserName, setInputUserName] = useState('');
-  const [showTrainer, setShowTrainer] = useState(false);
-  const [editingTrainer, setEditingTrainer] = useState(null); // 用於存儲當前正在編輯的訓練師
-  const { addedPokemons, addTrainer, trainerData, updateTrainer, deleteTrainerData  } = useContext(TrainerContext);
-
+  const [userName, setUserName] = useState(''); // 訓練師名稱
+  const [gender, setGender] = useState(''); // 性別
+  const [inputUserName, setInputUserName] = useState(''); // 訓練師名稱輸入框
+  const [showTrainer, setShowTrainer] = useState(false); // 訓練師資料顯示 預設不顯示
+  const [editingTrainer, setEditingTrainer] = useState(null); // 用於存儲當前正在編輯的訓練師 預設為空
   const [selectedPokemon, setSelectedPokemon] = useState(null); // 用於儲存被選中的寶可夢
 
-  useEffect(() => {
+  const { addedPokemons, // 新增訓練師的寶可夢列表
+          addTrainer, // 新增訓練師資料
+          trainerData, // 儲存訓練師資料的列表
+          updateTrainer, // 更新指定索引的訓練師資料
+          deleteTrainerData // 刪除訓練師的資料
+        } = useContext(TrainerContext);
+
+  useEffect(() => { // 依訓練師資料呈現畫面
     if (trainerData.length > 0) {
       setShowTrainer(true);
     } else {
@@ -24,15 +29,15 @@ const TrainerForm = () => {
     }
   }, [trainerData]);
 
-  useEffect(() => {
+  useEffect(() => { // 編輯訓練師資料時 自動帶入
     if (editingTrainer !== null) {
       const trainer = trainerData[editingTrainer];
       setInputUserName(trainer.userName);
       setGender(trainer.gender);
     }
-  }, [editingTrainer, trainerData]);
+  }, [editingTrainer]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e) => { // 表單功能
     e.preventDefault();
 
     if (editingTrainer !== null) {
@@ -51,36 +56,36 @@ const TrainerForm = () => {
     }
   };
 
-  const getTrainerImage = (gender) => {
+  const getTrainerImage = (gender) => { // 判斷男/女訓練師圖片
     return gender === 'male' ? male_character : female_character;
   };
 
-  const handleDetailClick = (pokemon) => {
-    setSelectedPokemon(pokemon); // 設定被選中的寶可夢，打開Dialog顯示更多資訊
+  const handleDetailClick = (pokemon) => { // 設定被選中的寶可夢，打開Dialog顯示更多資訊
+    setSelectedPokemon(pokemon);
   };
   
-  const handleCloseDialog = () => {
-    setSelectedPokemon(null); // 關閉對話框
+  const handleCloseDialog = () => { // 關閉對話框
+    setSelectedPokemon(null);
   };
 
-  const handleTrainerUpdate = (index) => {
+  const handleEditClick = (trainer, index) => { //開啟編輯訓練家資料
+    setEditingTrainer(index);
+    setInputUserName(trainer.userName);
+    setGender(trainer.gender);
+  };
+
+  const handleTrainerUpdate = (index) => { // 更新訓練師資料
     const updatedTrainer = {
       ...trainerData[index],
       userName: inputUserName,
       gender: gender,
-      pokemons: trainerData[index].pokemons, // 保持已有的寶可夢不變
+      pokemons: trainerData[index].pokemons, // 保持寶可夢不變
     };
 
     updateTrainer(index, updatedTrainer); // 調用 context 提供的函數來更新數據
     setEditingTrainer(null);
     setInputUserName('');
     setGender('');
-  };
-
-  const handleEditClick = (trainer, index) => {
-    setEditingTrainer(index);
-    setInputUserName(trainer.userName);
-    setGender(trainer.gender);
   };
 
   return (
