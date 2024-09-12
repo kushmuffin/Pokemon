@@ -9,7 +9,7 @@ export const TrainerProvider = ({ children }) => {
   });
   const [addedPokemons, setAddedPokemons] = useState([]); // 寶可夢資料
 
-  // 在頁面載入或 trainerData 更新後，將最新訓練家的寶可夢同步到 addedPokemons
+  // 在頁面載入或 trainerData 更新後，將訓練家的寶可夢同步到 addedPokemons
   useEffect(() => {
     if (trainerData.length > 0) {
       const currentTrainer = trainerData[trainerData.length - 1];
@@ -17,7 +17,7 @@ export const TrainerProvider = ({ children }) => {
     }
   }, [trainerData]);
 
-  const addTrainer = (trainer) => { // 新增訓練家資料
+  const addedTrainer = (trainer) => { // 新增訓練家資料
     const updatedTrainerData = [...trainerData, trainer];
     setTrainerData(updatedTrainerData);
     localStorage.setItem('trainerData', JSON.stringify(updatedTrainerData));
@@ -57,7 +57,7 @@ export const TrainerProvider = ({ children }) => {
   };
 
   return (
-    <TrainerContext.Provider value={{ addedPokemons, addPokemon, trainerData, addTrainer, updateTrainer, deleteTrainerData }}>
+    <TrainerContext.Provider value={{ addedPokemons, addPokemon, trainerData, addedTrainer, updateTrainer, deleteTrainerData }}>
       {children} 
     </TrainerContext.Provider>
   );

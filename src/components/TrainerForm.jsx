@@ -15,7 +15,7 @@ const TrainerForm = () => {
   const [selectedPokemon, setSelectedPokemon] = useState(null); // 用於儲存被選中的寶可夢
 
   const { addedPokemons, // 新增訓練師的寶可夢列表
-          addTrainer, // 新增訓練師資料
+          addedTrainer, // 新增訓練師資料
           trainerData, // 儲存訓練師資料的列表
           updateTrainer, // 更新指定索引的訓練師資料
           deleteTrainerData // 刪除訓練師的資料
@@ -31,6 +31,7 @@ const TrainerForm = () => {
 
   useEffect(() => { // 編輯訓練師資料時 自動帶入
     if (editingTrainer !== null) {
+      console.log(editingTrainer)
       const trainer = trainerData[editingTrainer];
       setInputUserName(trainer.userName);
       setGender(trainer.gender);
@@ -49,7 +50,7 @@ const TrainerForm = () => {
         pokemons: addedPokemons,
       };
 
-      addTrainer(newTrainer); // 使用 useContext 更新訓練師資料
+      addedTrainer(newTrainer); // 使用 useContext 更新訓練師資料
       setUserName(inputUserName);
       setShowTrainer(true);
       setInputUserName('');
@@ -63,7 +64,7 @@ const TrainerForm = () => {
   const handleDetailClick = (pokemon) => { // 設定被選中的寶可夢，打開Dialog顯示更多資訊
     setSelectedPokemon(pokemon);
   };
-  
+
   const handleCloseDialog = () => { // 關閉對話框
     setSelectedPokemon(null);
   };
@@ -114,7 +115,7 @@ const TrainerForm = () => {
               <option value="male">男</option>
               <option value="female">女</option>
             </select>
-            <button type="submit">{editingTrainer !== null ? '更新' : '提交'}</button>
+            <button type="submit">{editingTrainer !== null ? '更新' : '確認'}</button>
           </div>
         </form>
       )}
