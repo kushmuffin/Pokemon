@@ -117,7 +117,6 @@ const PokemonList = () => {
 
   const handleAddToListClick = (pokemon) => { // 將寶可夢資料加入列表 (TrainerContext)
     addPokemon(pokemon);
-    alert(`${pokemon.name} added to list`);
   };
 
   const handleCloseDialog = () => { // 關閉對話框

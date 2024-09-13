@@ -8,12 +8,14 @@ export const TrainerProvider = ({ children }) => {
     return storedData ? JSON.parse(storedData) : []; // 沒有訓練家先空陣列
   });
   const [addedPokemons, setAddedPokemons] = useState([]); // 寶可夢資料
+  const [pokemonId, setPokemonId] = useState(0); // 寶可夢id
+
 
   // 在頁面載入或 trainerData 更新後，將訓練家的寶可夢同步到 addedPokemons
   useEffect(() => {
     if (trainerData.length > 0) {
       const currentTrainer = trainerData[trainerData.length - 1];
-      setAddedPokemons(currentTrainer.pokemons || []); // 如果 pokemons 存在，則同步，否則設為空陣列
+      setAddedPokemons(currentTrainer.pokemonlist || []); // 如果 pokemons 存在，則同步，否則設為空陣列
     }
   }, [trainerData]);
 
@@ -27,20 +29,49 @@ export const TrainerProvider = ({ children }) => {
   const addPokemon = (pokemon) => { // 新增寶可夢
     const currentTrainer = trainerData[trainerData.length - 1]; 
     if (!addedPokemons.find(p => p.id === pokemon.id)) { // 不要攜帶重複的寶可夢
-      const updatedPokemons = [...addedPokemons, { ...pokemon, id: Date.now() }]; // 添加 id
+      const updatedPokemons = [...addedPokemons, { ...pokemon, id: pokemonId }];
+      setPokemonId(pokemonId + 1);
       setAddedPokemons(updatedPokemons);
       
-      const updatedTrainer = { ...currentTrainer, pokemons: updatedPokemons };
+      const updatedTrainer = { ...currentTrainer, pokemonlist: updatedPokemons };
       const updatedTrainerData = [
         ...trainerData.slice(0, trainerData.length - 1),
         updatedTrainer
       ];
       setTrainerData(updatedTrainerData);
       localStorage.setItem('trainerData', JSON.stringify(updatedTrainerData));
+      alert(`${pokemon.name} 成功加入`);
     } else {
       alert(`${pokemon.name} 已經在列表中`);
     }
   };
+
+  // const addPokemon = (pokemon) => { // GPT
+  //   const currentTrainer = trainerData[trainerData.length - 1]; 
+  
+  //   // 如果寶可夢已存在，則彈出提示
+  //   if (addedPokemons.some(p => p.id === pokemon.id)) {
+  //     return alert(`${pokemon.name} 已經在列表中`);
+  //   }
+  
+  //   // 增加寶可夢，並自動遞增 id
+  //   const newPokemon = { ...pokemon, id: pokemonId };
+  //   const updatedPokemons = [...addedPokemons, newPokemon];
+    
+  //   // 更新狀態
+  //   setPokemonId(pokemonId + 1);
+  //   setAddedPokemons(updatedPokemons);
+  
+  //   // 更新當前訓練家的寶可夢
+  //   const updatedTrainerData = trainerData.map((trainer, index) => 
+  //     index === trainerData.length - 1 
+  //       ? { ...trainer, pokemons: updatedPokemons } 
+  //       : trainer
+  //   );
+    
+  //   setTrainerData(updatedTrainerData);
+  //   localStorage.setItem('trainerData', JSON.stringify(updatedTrainerData));
+  // };
 
   const updateTrainer = (index, updatedTrainer) => {
     const updatedTrainerData = [...trainerData];

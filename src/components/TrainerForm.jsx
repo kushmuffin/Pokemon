@@ -47,7 +47,7 @@ const TrainerForm = () => {
       const newTrainer = {
         userName: inputUserName,
         gender: gender,
-        pokemons: addedPokemons,
+        pokemonlist: addedPokemons,
       };
 
       addedTrainer(newTrainer); // 使用 useContext 更新訓練師資料
@@ -61,14 +61,6 @@ const TrainerForm = () => {
     return gender === 'male' ? male_character : female_character;
   };
 
-  const handleDetailClick = (pokemon) => { // 設定被選中的寶可夢，打開Dialog顯示更多資訊
-    setSelectedPokemon(pokemon);
-  };
-
-  const handleCloseDialog = () => { // 關閉對話框
-    setSelectedPokemon(null);
-  };
-
   const handleEditClick = (trainer, index) => { //開啟編輯訓練家資料
     setEditingTrainer(index);
     setInputUserName(trainer.userName);
@@ -80,13 +72,26 @@ const TrainerForm = () => {
       ...trainerData[index],
       userName: inputUserName,
       gender: gender,
-      pokemons: trainerData[index].pokemons, // 保持寶可夢不變
+      pokemonlist: trainerData[index].pokemonlist, // 保持寶可夢不變
     };
-
     updateTrainer(index, updatedTrainer); // 調用 context 提供的函數來更新數據
     setEditingTrainer(null);
     setInputUserName('');
     setGender('');
+  };
+
+  const cancelTrainerUpdate = () => { // 取消修改
+    setInputUserName(''); 
+    setGender(''); 
+    setEditingTrainer(null);
+  }
+
+  const handleDetailClick = (pokemon) => { // 設定被選中的寶可夢，打開Dialog顯示更多資訊
+    setSelectedPokemon(pokemon);
+  };
+
+  const handleCloseDialog = () => { // 關閉對話框
+    setSelectedPokemon(null);
   };
 
   return (
@@ -166,11 +171,11 @@ const TrainerForm = () => {
                     )}
                   </td>
                   <td>
-                    {trainer.pokemons.length === 0 ? (
+                    {trainer.pokemonlist.length === 0 ? (
                       <p>尚未添加寶可夢</p>
                     ) : (
                       <div>
-                        {trainer.pokemons.map((pokemon, idx) => (
+                        {trainer.pokemonlist.map((pokemon, idx) => (
                           <img
                             className='bitimg'
                             onClick={() => handleDetailClick(pokemon)}
@@ -186,6 +191,7 @@ const TrainerForm = () => {
                     {editingTrainer === index ? (
                       <>
                         <button onClick={() => handleTrainerUpdate(index)}>保存</button>
+                        <button onClick={() => cancelTrainerUpdate()}>取消</button>
                       </>
                     ) : (
                       <>

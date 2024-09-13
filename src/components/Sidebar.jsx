@@ -48,7 +48,7 @@ const Sidebar = () => {
                       {trainer.userName}
                     </div>
                     <div>
-                      {trainer.pokemons.map((pokemon, idx) => (
+                      {trainer.pokemonlist.map((pokemon, idx) => (
                         // {/* <p key={idx}>{pokemon.name}</p> */}
                         <img key={idx} className='bitimg' onClick={() => handleDetailClick(pokemon)} src={pokemon.sprites.front_default} alt={pokemon.name}   style={{ width: '70px'}}/>
                       ))}
