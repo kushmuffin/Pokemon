@@ -28,17 +28,23 @@ export const TrainerProvider = ({ children }) => {
 
   const addPokemon = (pokemon) => { // 新增寶可夢
     const currentTrainer = trainerData[trainerData.length - 1]; 
-    if (!addedPokemons.find(p => p.id === pokemon.id)) { // 不要攜帶重複的寶可夢
-      const updatedPokemons = [...addedPokemons, { ...pokemon, id: pokemonId }];
-      setPokemonId(pokemonId + 1);
+    // 檢查寶可夢是否已經在列表中（根據寶可夢名字）
+    if (!addedPokemons.some(p => p.name === pokemon.name)) { 
+      // 新增寶可夢的唯一ID
+      const updatedPokemons = [...addedPokemons, { ...pokemon, id: pokemonId }]; 
+      setPokemonId(pokemonId + 1); // 遞增 id
+      // 更新寶可夢列表
       setAddedPokemons(updatedPokemons);
-      
+  
+      // 更新當前訓練家的資料
       const updatedTrainer = { ...currentTrainer, pokemonlist: updatedPokemons };
       const updatedTrainerData = [
         ...trainerData.slice(0, trainerData.length - 1),
         updatedTrainer
       ];
       setTrainerData(updatedTrainerData);
+  
+      // 存入 localStorage
       localStorage.setItem('trainerData', JSON.stringify(updatedTrainerData));
       alert(`${pokemon.name} 成功加入`);
     } else {
@@ -73,7 +79,7 @@ export const TrainerProvider = ({ children }) => {
   //   localStorage.setItem('trainerData', JSON.stringify(updatedTrainerData));
   // };
 
-  const updateTrainer = (index, updatedTrainer) => {
+  const updateTrainer = (index, updatedTrainer) => { // 更新訓練家
     const updatedTrainerData = [...trainerData];
     updatedTrainerData[index] = updatedTrainer;
     setTrainerData(updatedTrainerData);
