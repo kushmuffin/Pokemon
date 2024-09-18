@@ -89,12 +89,6 @@ main {
   text-wrap: nowrap;
 }
 
-.trainer {
-  /* background-color: pink;
-  border-radius: 8px;
-  box-shadow: 1px 1px 8px 2px gray; */
-}
-
 .trainer_data {
   display: flex;
   align-items: center;

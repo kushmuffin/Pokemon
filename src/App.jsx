@@ -12,8 +12,8 @@ import Moves from './components/MovesList'; // 引入組件
 
 import './App.css'
 
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/dist/js/bootstrap.bundle.min';
+import '/bootstrap/dist/css/bootstrap.min.css';
+import '/bootstrap/dist/js/bootstrap.bundle.min';
 
 function App() {
   return (
