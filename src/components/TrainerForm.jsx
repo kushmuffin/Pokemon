@@ -111,7 +111,7 @@ const TrainerForm = () => {
             />
             <span>性別:</span>
             <select className='enter'
-              style={{ height: '44px' }}
+              style={{ height: '45px' }}
               value={gender}
               onChange={(e) => setGender(e.target.value)}
               required

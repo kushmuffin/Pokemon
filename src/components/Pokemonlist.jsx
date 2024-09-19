@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { fetchPokemonList, fetchPokemonDetails } from './PokemonApi'; // 假設 api 文件名為 api.js
+import { fetchPokemonList, fetchPokemonDetails, fetchAllPokemonTypes } from './PokemonApi'; // 假設 api 文件名為 api.js
 import PokemonDetailDialog from './PokemonDetailDialog';
 import { TrainerContext } from './TrainerContext';
 
@@ -15,6 +15,9 @@ const PokemonList = () => {
   const [filteredPokemon, setFilteredPokemon] = useState([]); // 符合關鍵字搜尋條件的寶可夢列表
   const [selectedPokemon, setSelectedPokemon] = useState(null); // 顯示被選中的寶可夢的詳細資料(Dialog)
 
+  const [types, setTypes] = useState([]);  // 從API取得所有寶可夢屬性
+  const [selectedType, setSelectedType] = useState(''); // 選擇的屬性
+
   const { addPokemon } = useContext(TrainerContext); // 使用上下文
 
   useEffect(() => { // 初始渲染
@@ -28,6 +31,19 @@ const PokemonList = () => {
       }
     };
     getPokemonList();
+  }, []);
+
+  useEffect(() => { // 帶入屬性
+    const getTypes = async () => {
+      try {
+        const typesData = await fetchAllPokemonTypes(); // 獲取所有屬性
+        setTypes(typesData); // 存入 state
+        console.log('Pokemon type fetched:', typesData);
+      } catch (error) {
+        console.error('Error fetching Pokemon type:', error);
+      }
+    };
+    getTypes();
   }, []);
 
   useEffect(() => { // 切換世代
@@ -58,6 +74,10 @@ const PokemonList = () => {
       getPokemonGen();
     // }
   }, [pokemonData, currentPage]);
+
+  // useEffect(() => {
+  //   const filtered
+  // })
 
   // 顯示數量，用於按鈕
   const generations = {
@@ -117,10 +137,15 @@ const PokemonList = () => {
 
   const handleAddToListClick = (pokemon) => { // 將寶可夢資料加入列表 (TrainerContext)
     addPokemon(pokemon);
+    alert(`${pokemon.name} added to list`);
   };
 
   const handleCloseDialog = () => { // 關閉對話框
     setSelectedPokemon(null);
+  };
+
+  const handleChangeType = (e) => {
+    setSelectedType(e.target.value);
   };
 
   const typeColors = {
@@ -151,6 +176,17 @@ const PokemonList = () => {
       <h1>寶可夢列表</h1>
       <div>
         {renderPagination()}
+        <select className='enter'
+          style={{ height: '45px' }}
+          placeholder="全部屬性"
+          value={selectedType}
+          onChange={handleChangeType}
+        >
+          <option key="0" value="">全部屬性</option>
+          {types.map((type, index) => (
+            <option key={index + 1} value={type.name}>{typeTranslations[type.name]}</option> // 顯示屬性名稱
+          ))}
+        </select>
         <input
           className='enter'
           type='text'

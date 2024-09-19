@@ -1053,27 +1053,27 @@ export const generation9 ={
 }
 
 // 屬性
-export const translations = {
-  normal: "一般",
-  fighting: "格鬥",
-  flying: "飛行",
-  poison: "毒",
-  ground: "地面",
-  rock: "岩石",
-  bug: "蟲",
-  ghost: "幽靈",
-  steel: "鋼",
-  fire: "火",
-  water: "水",
-  grass: "草",
-  electric: "電",
-  psychic: "超能力",
-  ice: "冰",
-  dragon: "龍",
-  dark: "惡",
-  fairy: "妖精",
-  stellar: "星幻",
-  unknown: "未知"
+export const type = {
+  "normal": "一般",
+  "fighting": "格鬥",
+  "flying": "飛行",
+  "poison": "毒",
+  "ground": "地面",
+  "rock": "岩石",
+  "bug": "蟲",
+  "ghost": "幽靈",
+  "steel": "鋼",
+  "fire": "火",
+  "water": "水",
+  "grass": "草",
+  "electric": "電",
+  "psychic": "超能力",
+  "ice": "冰",
+  "dragon": "龍",
+  "dark": "惡",
+  "fairy": "妖精",
+  "stellar": "星幻",
+  "unknown": "未知"
 };
 
 // 特性
@@ -1448,4 +1448,4 @@ export const ability = {
   "shield": ""
 }
 
-export default translations;
+export default type;

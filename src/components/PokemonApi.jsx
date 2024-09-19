@@ -22,6 +22,16 @@ export const fetchPokemonDetails = async (url) => {
   }
 };
 
+export const fetchAllPokemonTypes = async () => {
+  try {
+    const response = await axios.get(`${BASE_URL}/type`);
+    return response.data.results;
+  } catch (error) {
+    console.error('Error fetching Pokemon type:', error);
+    throw error;
+  }
+};
+
 // 特性
 export const fetchAllAbilities = async (limit = 311) => {
   try {
