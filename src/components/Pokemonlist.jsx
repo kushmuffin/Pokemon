@@ -75,11 +75,10 @@ const PokemonList = () => {
     // }
   }, [pokemonData, currentPage]);
 
-  useEffect(() => {
+  useEffect(() => { // 以屬性搜索寶可夢
     const filtered = pokemonList.filter(pokemon => {
       // 如果沒有選擇任何屬性，顯示所有寶可夢
       if (!selectedType) return true;
-      
       // 檢查寶可夢是否包含所選屬性
       return pokemon.types.some(type => type.type.name === selectedType);
     }).filter(pokemon =>
