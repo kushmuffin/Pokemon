@@ -50,6 +50,12 @@ const RadarChart = ({ pokemonStats }) => {
       r: { // r 軸代表雷達圖的 radialLinear scale
         min: 0,   // 最小值
         max: 200, // 最大值
+        pointLabels: {
+          color: '#000', // 你也可以改變字體顏色
+          font: {
+            size: 24 // 設定字體大小為 16px
+          }
+        },
         ticks: {
           stepSize: 50 // 可選：設置刻度的步長
         }

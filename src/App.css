@@ -198,13 +198,17 @@ main {
   justify-content: space-around;
 }
 
+.dialog-left {
+  flex: 1;
+}
+
 .dialog-chart {
   width: 500px;
 }
 
-.dialog-chart {
+/* .dialog-chart {
   
-}
+} */
 
 /* ------------------------------------------------- Area ------------------------------------------------- */
 .area-display{

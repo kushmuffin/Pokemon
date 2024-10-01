@@ -1424,4 +1424,12 @@ export const ability = {
   "shield": ""
 }
 
+export const move = {
+  "swords-dance": "劍舞",
+  "vine-whip": "藤鞭",
+  "razor-wind": "旋風刀",
+  "tackle": "衝撞",
+  "growl": "叫聲",
+}
+
 export default type;

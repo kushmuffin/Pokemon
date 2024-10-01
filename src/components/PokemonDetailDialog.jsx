@@ -1,5 +1,5 @@
 import React from 'react';
-import { pokemonName, ability } from '../Translations'; //翻譯檔
+import { pokemonName, ability, move } from '../Translations'; //翻譯檔
 import RadarChart from './RadarChart'; // 引入 Radar 圖表
 
 const PokemonDetailDialog = ({ pokemon, onClose }) => {
@@ -22,25 +22,38 @@ const PokemonDetailDialog = ({ pokemon, onClose }) => {
     return ability[abilityName] || abilityName; // 使用翻譯檔中的名稱，若無翻譯則使用原名稱
   }).join(', ');
 
+  // 將招式名稱轉換為中文
+  const translatedMoves = pokemon?.moves
+  ?.filter(move => 
+    move.version_group_details.some(detail =>
+      detail.move_learn_method.name === 'level-up' && detail.level_learned_at === 1
+    )
+  )
+  ?.map(obj => {
+    const movesName = obj.move.name;
+    return move[movesName] || movesName; // 使用翻譯檔中的名稱，若無翻譯則使用原名稱
+  }).join(', ');
+
   const pokemonStats = {
     hp: pokemon.stats?.find(stat => stat.stat.name === 'hp')?.base_stat,
     attack: pokemon.stats?.find(stat => stat.stat.name === 'attack')?.base_stat,
     defense: pokemon.stats?.find(stat => stat.stat.name === 'defense')?.base_stat,
     specialAttack: pokemon.stats?.find(stat => stat.stat.name === 'special-attack')?.base_stat,
     specialDefense: pokemon.stats?.find(stat => stat.stat.name === 'special-defense')?.base_stat,
-    speed: pokemon.stats?.find(stat => stat.stat.name === 'speed')?.base_stat
+    speed: pokemon.stats?.find(stat => stat.stat.name === 'speed')?.base_stat,
   };
 
   return (
     <div className="dialog-overlay" onClick={handleOverlayClick}>
       <div className="dialog-content">
-        <div className=''>
+        <div className='dialog-left'>
           <img className='artwork' src={pokemon.sprites?.other?.['official-artwork']?.front_default} alt={pokemon.name} />
           <h2>{allTranslations[pokemon.name] || pokemon.name}</h2>
           {/* <p>編號: {pokemon.id}</p> */}
           <p>特性: {translatedAbilities}</p>
-          <span>高度: {pokemon.height}</span>{' '}
-          <span>重量: {pokemon.weight}</span>
+          <p>招式: {translatedMoves}</p>
+          <span>高度: {pokemon.height / 10} 公尺</span>{' '}
+          <span>重量: {pokemon.weight / 10} 公斤</span>
           <p>基礎經驗值: {pokemon.base_experience}</p>
         </div>
         <div className='dialog-chart'>
