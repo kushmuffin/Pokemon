@@ -3,10 +3,10 @@ import { fetchPokemonList, fetchPokemonDetails, fetchAllPokemonTypes } from './P
 import PokemonDetailDialog from './PokemonDetailDialog';
 import { TrainerContext } from './TrainerContext';
 
-import typeTranslations from '../typeTranslations';
+import typeTranslations from '../Translations';
 
 
-const PokemonList = () => {
+const Pokemon = () => {
   const [pokemonData, setPokemonData] = useState([]); // 從API取得所有寶可夢列表
   const [currentPage, setCurrentPage] = useState(1); // 控制世代以顯示寶可夢
   const [pokemonList, setPokemonList] = useState([]); // 每個寶可夢的詳細資訊(姓名、屬性等)與圖片
@@ -145,7 +145,7 @@ const PokemonList = () => {
 
   const handleAddToListClick = (pokemon) => { // 將寶可夢資料加入列表 (TrainerContext)
     addPokemon(pokemon);
-    alert(`${pokemon.name} added to list`);
+    // alert(`${pokemon.name} added to list`);
   };
 
   const handleCloseDialog = () => { // 關閉對話框
@@ -245,7 +245,7 @@ const PokemonList = () => {
         />
       )}
 
-        {/* <table style={{'display': 'none'}}>
+      <table style={{'display': 'none'}}>
           <thead>
             <tr>
               <th>編號</th>
@@ -261,7 +261,7 @@ const PokemonList = () => {
             </tr>
           </thead>
           <tbody>
-            {filteredPokemonDetails.map((pokemon) => {
+            {filteredPokemon.map((pokemon) => {
               const hpStat = pokemon.stats?.find(stat => stat.stat.name === 'hp');
               const attackStat = pokemon.stats?.find(stat => stat.stat.name === 'attack');
               const defenseStat = pokemon.stats?.find(stat => stat.stat.name === 'defense');
@@ -295,9 +295,9 @@ const PokemonList = () => {
               );
             })}
           </tbody>
-        </table> */}
+      </table>
     </div>
   );
 };
 
-export default PokemonList;
+export default Pokemon;

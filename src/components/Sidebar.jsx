@@ -19,7 +19,7 @@ const Sidebar = () => {
             <Link className='sidebar-item'to="/trainerform">
               <span>訓練師資料</span>
             </Link>
-            <Link className='sidebar-item'to="/pokemonlist">
+            <Link className='sidebar-item'to="/pokemon">
               <span>寶可夢列表</span>
             </Link>
             <Link className='sidebar-item'to="/area">

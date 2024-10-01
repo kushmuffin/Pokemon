@@ -188,12 +188,22 @@ main {
 }
 
 .dialog-content {
+  display: flex;
   background-color: white;
   padding: 20px;
   border-radius: 8px;
-  max-width: 600px;
+  max-width: 60%;
   width: 100%;
   text-align: center;
+  justify-content: space-around;
+}
+
+.dialog-chart {
+  width: 500px;
+}
+
+.dialog-chart {
+  
 }
 
 /* ------------------------------------------------- Area ------------------------------------------------- */

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { fetchAllAbilities } from './PokemonApi';
-import { ability } from '../typeTranslations'; // 匯入翻譯檔
+import { ability } from '../Translations'; // 匯入翻譯檔
 
 const Abilities = () => {
   const [abilities, setAbilities] = useState([]);

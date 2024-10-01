@@ -26,7 +26,7 @@ function App() {
             <Routes>
               <Route path="/" element={<TrainerForm />} />
               <Route path="/trainerform" element={<TrainerForm />} />
-              <Route path="/pokemonlist" element={<Pokemon />} />
+              <Route path="/pokemon" element={<Pokemon />} />
               <Route path="/area" element={<Area />} />
               <Route path="/abilities" element={<Abilities />} />
               <Route path="/moves" element={<Moves />} />

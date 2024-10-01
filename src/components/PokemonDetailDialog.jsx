@@ -1,18 +1,10 @@
 import React from 'react';
-import { ability, generation1, generation2, generation3, generation4, generation5, generation6, generation7, generation8, generation9 } from '../typeTranslations'; //翻譯檔
-
+import { pokemonName, ability } from '../Translations'; //翻譯檔
+import RadarChart from './RadarChart'; // 引入 Radar 圖表
 
 const PokemonDetailDialog = ({ pokemon, onClose }) => {
   const allTranslations = {
-    ...generation1,
-    ...generation2,
-    ...generation3,
-    ...generation4,
-    ...generation5,
-    ...generation6,
-    ...generation7,
-    ...generation8,
-    ...generation9
+    ...pokemonName
   }; // 翻譯寶可夢名稱
 
   if (!pokemon) return null; // 如果沒有寶可夢資料則不顯示對話框
@@ -30,17 +22,30 @@ const PokemonDetailDialog = ({ pokemon, onClose }) => {
     return ability[abilityName] || abilityName; // 使用翻譯檔中的名稱，若無翻譯則使用原名稱
   }).join(', ');
 
+  const pokemonStats = {
+    hp: pokemon.stats?.find(stat => stat.stat.name === 'hp')?.base_stat,
+    attack: pokemon.stats?.find(stat => stat.stat.name === 'attack')?.base_stat,
+    defense: pokemon.stats?.find(stat => stat.stat.name === 'defense')?.base_stat,
+    specialAttack: pokemon.stats?.find(stat => stat.stat.name === 'special-attack')?.base_stat,
+    specialDefense: pokemon.stats?.find(stat => stat.stat.name === 'special-defense')?.base_stat,
+    speed: pokemon.stats?.find(stat => stat.stat.name === 'speed')?.base_stat
+  };
+
   return (
     <div className="dialog-overlay" onClick={handleOverlayClick}>
       <div className="dialog-content">
-        <img className='artwork' src={pokemon.sprites?.other?.['official-artwork']?.front_default} alt={pokemon.name} />
-        <h2>{allTranslations[pokemon.name] || pokemon.name}</h2>
-        <p>編號: {pokemon.id}</p>
-        <p>特性: {translatedAbilities}</p>
-        <span>高度: {pokemon.height}</span>{' '}
-        <span>重量: {pokemon.weight}</span>
-        <p>基礎經驗值: {pokemon.base_experience}</p>
-        <table>
+        <div className=''>
+          <img className='artwork' src={pokemon.sprites?.other?.['official-artwork']?.front_default} alt={pokemon.name} />
+          <h2>{allTranslations[pokemon.name] || pokemon.name}</h2>
+          {/* <p>編號: {pokemon.id}</p> */}
+          <p>特性: {translatedAbilities}</p>
+          <span>高度: {pokemon.height}</span>{' '}
+          <span>重量: {pokemon.weight}</span>
+          <p>基礎經驗值: {pokemon.base_experience}</p>
+        </div>
+        <div className='dialog-chart'>
+          <RadarChart pokemonStats={pokemonStats} /> {/* 使用 RadarChart 組件 */}
+          <table>
           <thead>
             <tr>
               <th>生命值</th>
@@ -73,14 +78,9 @@ const PokemonDetailDialog = ({ pokemon, onClose }) => {
               </td>
             </tr>
           </tbody>
-        </table>
-        {/* <p>生命值: {pokemon.stats?.find(stat => stat.stat.name === 'hp')?.base_stat}</p>
-        <p>攻擊力: {pokemon.stats?.find(stat => stat.stat.name === 'attack')?.base_stat}</p>
-        <p>防禦力: {pokemon.stats?.find(stat => stat.stat.name === 'defense')?.base_stat}</p>
-        <p>特攻: {pokemon.stats?.find(stat => stat.stat.name === 'special-attack')?.base_stat}</p>
-        <p>特防: {pokemon.stats?.find(stat => stat.stat.name === 'special-defense')?.base_stat}</p>
-        <p>速度: {pokemon.stats?.find(stat => stat.stat.name === 'speed')?.base_stat}</p> */}
-        <button onClick={onClose}>關閉</button>
+          </table>
+          <button onClick={onClose}>關閉</button>
+        </div>
       </div>
     </div>
   );
