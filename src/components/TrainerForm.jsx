@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
+import { Table, Button, Input, Select } from 'antd';
 import { TrainerContext } from './TrainerContext';
 import PokemonDetailDialog from './PokemonDetailDialog';
 
@@ -94,6 +95,75 @@ const TrainerForm = () => {
     setSelectedPokemon(null);
   };
 
+  // 表格的欄位配置
+  const columns = [
+    {
+      title: '訓練師名稱',
+      dataIndex: 'userName',
+      key: 'userName',
+      render: (text, record, index) =>
+        editingTrainer === index ? (
+          <Input value={inputUserName} onChange={(e) => setInputUserName(e.target.value)} />
+        ) : (
+          text
+        ),
+    },
+    {
+      title: '性別',
+      dataIndex: 'gender',
+      key: 'gender',
+      render: (text, record, index) =>
+        editingTrainer === index ? (
+          <Select value={gender} onChange={(value) => setGender(value)} style={{ width: 120 }}>
+            <Select.Option value="male">男</Select.Option>
+            <Select.Option value="female">女</Select.Option>
+          </Select>
+        ) : (
+          <img src={getTrainerImage(record.gender)} alt={record.userName} style={{ width: '50px' }} />
+        ),
+    },
+    {
+      title: '寶可夢',
+      dataIndex: 'pokemonlist',
+      key: 'pokemonlist',
+      render: (pokemonlist) =>
+        pokemonlist.length === 0 ? (
+          <p>尚未添加寶可夢</p>
+        ) : (
+          pokemonlist.map((pokemon, idx) => (
+            <img
+              key={idx}
+              className="bitimg"
+              onClick={() => handleDetailClick(pokemon)}
+              src={pokemon.sprites.front_default}
+              alt={pokemon.name}
+              style={{ width: '50px', marginRight: '5px' }}
+            />
+          ))
+        ),
+    },
+    {
+      title: '其他',
+      key: 'action',
+      render: (text, record, index) =>
+        editingTrainer === index ? (
+          <>
+            <Button onClick={() => handleTrainerUpdate(index)}>保存</Button>
+            <Button onClick={cancelTrainerUpdate} style={{ marginLeft: '10px' }}>
+              取消
+            </Button>
+          </>
+        ) : (
+          <>
+            <Button onClick={() => handleEditClick(record, index)}>編輯</Button>
+            <Button onClick={() => deleteTrainerData(index)} style={{ marginLeft: '10px' }}>
+              刪除
+            </Button>
+          </>
+        ),
+    },
+  ];
+
   return (
     <div className='context'>
       <h1>訓練師資料</h1>
@@ -125,9 +195,10 @@ const TrainerForm = () => {
         </form>
       )}
       {showTrainer && (
-        <div className='trainer'>
+        <div className='trainer-table'>
           <h3>已提交的訓練師資料</h3>
-          <table border="1">
+          <Table className='table-data' columns={columns} dataSource={trainerData} rowKey={(record, index) => index} />
+          {/* <table border="1">
             <thead>
               <tr>
                 <th>訓練師名稱</th>
@@ -203,7 +274,7 @@ const TrainerForm = () => {
                 </tr>
               ))}
             </tbody>
-          </table>
+          </table> */}
         </div>
       )}
       {/* 新增 PokemonDetailDialog */}

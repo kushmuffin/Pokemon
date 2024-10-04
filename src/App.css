@@ -101,6 +101,26 @@ main {
   flex-direction: column;
 }
 
+.trainer-table {
+  width: 100%;
+}
+
+.table-data .ant-table {
+  font-size: 40px;  /* 調整整個表格內部字體大小 */
+}
+
+.table-data .ant-table-thead > tr > th {
+  font-size: 24px;  /* 調整表格表頭字體大小 */
+}
+
+.table-data .ant-table-tbody > tr > td {
+  font-size: 20px;  /* 調整表格行內的字體大小 */
+}
+
+.table-data .ant-table-tbody > tr > td > button {
+  font-size: 18px;  /* 調整表格行內的字體大小 */
+}
+
 /* ------------------------------------------------- Pokemon ------------------------------------------------- */
 .bitimg,
 .artwork {
