@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { TrainerContext } from './TrainerContext';
 
 import pokemon_banner from '../assets/pokemon-banner.png'
@@ -9,6 +9,7 @@ import female_character from '../assets/female_character.png';
 
 const Sidebar = () => {
   const { trainerData  } = useContext(TrainerContext);
+  const navigate = useNavigate();
 
   return (
     <aside className='aside'>
@@ -61,6 +62,7 @@ const Sidebar = () => {
               <button
                 onClick={() => {
                   localStorage.removeItem('isLoggedIn');
+                  navigate('/'); // 導回首頁
                   window.location.reload();
                 }}
                 style={{
