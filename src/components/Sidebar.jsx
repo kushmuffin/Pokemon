@@ -57,12 +57,33 @@ const Sidebar = () => {
                 ))}
               </div>
             )}
+            <div style={{ marginTop: '2rem', textAlign: 'center' }}>
+              <button
+                onClick={() => {
+                  localStorage.removeItem('isLoggedIn');
+                  window.location.reload();
+                }}
+                style={{
+                  background: 'linear-gradient(90deg, #718ef8ff 0%, #acd3ffff 100%)',
+                  color: '#fff',
+                  border: 'none',
+                  borderRadius: '8px',
+                  padding: '0.5rem 1.5rem',
+                  fontWeight: 'bold',
+                  cursor: 'pointer',
+                  fontSize: '1rem',
+                  transition: 'background 0.2s',
+                }}
+              >
+                登出
+              </button>
+            </div>
             <div className='sidebar-link'>
               <a href="https://tw.portal-pokemon.com/">
-                <img src={pokemon_banner} alt="" />
+                <img src={pokemon_banner} alt="" style={{ borderRadius: '20px' }}/>
               </a>
               <a href="https://www.nintendo.tw/">
-                <img src={nintendo_banner} alt="" />
+                <img src={nintendo_banner} alt="" style={{ borderRadius: '20px' }}/>
               </a>
             </div>
           </div>

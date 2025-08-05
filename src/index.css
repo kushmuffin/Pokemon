@@ -66,6 +66,114 @@ input {
   outline:none;
 }
 
+/* --- Login Page Modern Style --- */
+.login-bg {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #bfdbfe 0%, #fbcfe8 50%, #fef9c3 100%);
+}
+
+.logo-pwd-error {
+  font-size: 16px;
+  color: #ff0000;
+  margin-bottom: 1rem;
+}
+
+.login-card {
+  background: rgba(255,255,255,0.92);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18);
+  border-radius: 1.5rem;
+  padding: 3rem 2.5rem;
+  width: 24rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1.5px solid #dbeafe;
+}
+
+.login-logo {
+  width: 4rem;
+  height: 4rem;
+  margin-bottom: 1rem;
+  filter: drop-shadow(0 2px 8px #60a5fa);
+}
+
+.login-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #2563eb;
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.05em;
+  text-align: center;
+}
+
+.login-desc {
+  color: #64748b;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.login-input-wrap {
+  width: 100%;
+  margin-bottom: 1rem;
+  position: relative;
+}
+.login-input-icon {
+  position: absolute;
+  left: 0.75rem;
+  top: 0.7rem;
+  color: #94a3b8;
+  pointer-events: none;
+}
+.login-input {
+  width: 100%;
+  border: 1px solid #d1d5db;
+  padding: 0.5rem 0.75rem 0.5rem 2.5rem;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  transition: box-shadow 0.2s, border-color 0.2s;
+}
+.login-input:focus {
+  outline: none;
+  border-color: #60a5fa;
+  box-shadow: 0 0 0 2px #bae6fd;
+}
+.login-input[type="password"]:focus {
+  border-color: #f472b6;
+  box-shadow: 0 0 0 2px #fbcfe8;
+}
+.login-btn {
+  width: 100%;
+  background: linear-gradient(90deg, #3b82f6 0%, #f472b6 100%);
+  color: #fff;
+  padding: 0.5rem 0;
+  border-radius: 0.75rem;
+  font-weight: 700;
+  font-size: 1.1rem;
+  box-shadow: 0 2px 8px #fbcfe8;
+  border: none;
+  margin-bottom: 0.5rem;
+  transition: background 0.2s;
+}
+.login-btn:hover {
+  background: linear-gradient(90deg, #2563eb 0%, #f472b6 100%);
+}
+.login-hint {
+  margin-top: 1rem;
+  font-size: 0.85rem;
+  color: #e1edff;
+  text-align: center;
+}
+
+@media (max-width: 600px) {
+  .login-card {
+    width: 95vw;
+    padding: 2rem 0.5rem;
+  }
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;

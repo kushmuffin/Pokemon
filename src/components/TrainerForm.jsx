@@ -62,30 +62,44 @@ const TrainerForm = () => {
     return gender === 'male' ? male_character : female_character;
   };
 
+
+  // 編輯時暫存寶可夢
+  const [editingPokemons, setEditingPokemons] = useState([]);
+
   const handleEditClick = (trainer, index) => { //開啟編輯訓練家資料
     setEditingTrainer(index);
     setInputUserName(trainer.userName);
     setGender(trainer.gender);
+    setEditingPokemons(trainer.pokemonlist);
   };
+
 
   const handleTrainerUpdate = (index) => { // 更新訓練師資料
     const updatedTrainer = {
       ...trainerData[index],
       userName: inputUserName,
       gender: gender,
-      pokemonlist: trainerData[index].pokemonlist, // 保持寶可夢不變
+      pokemonlist: editingPokemons, // 用暫存的編輯寶可夢
     };
     updateTrainer(index, updatedTrainer); // 調用 context 提供的函數來更新數據
     setEditingTrainer(null);
     setInputUserName('');
     setGender('');
+    setEditingPokemons([]);
   };
+
 
   const cancelTrainerUpdate = () => { // 取消修改
     setInputUserName(''); 
     setGender(''); 
     setEditingTrainer(null);
+    setEditingPokemons([]);
   }
+
+  // 編輯時刪除寶可夢
+  const handleRemovePokemon = (idx) => {
+    setEditingPokemons(editingPokemons.filter((_, i) => i !== idx));
+  };
 
   const handleDetailClick = (pokemon) => { // 設定被選中的寶可夢，打開Dialog顯示更多資訊
     setSelectedPokemon(pokemon);
@@ -126,21 +140,46 @@ const TrainerForm = () => {
       title: '寶可夢',
       dataIndex: 'pokemonlist',
       key: 'pokemonlist',
-      render: (pokemonlist) =>
-        pokemonlist.length === 0 ? (
-          <p>尚未添加寶可夢</p>
-        ) : (
-          pokemonlist.map((pokemon, idx) => (
-            <img
-              key={idx}
-              className="bitimg"
-              onClick={() => handleDetailClick(pokemon)}
-              src={pokemon.sprites.front_default}
-              alt={pokemon.name}
-              style={{ width: '50px', marginRight: '5px' }}
-            />
-          ))
-        ),
+      render: (pokemonlist, record, index) => {
+        // 編輯狀態下顯示可刪除
+        if (editingTrainer === index) {
+          return editingPokemons.length === 0 ? (
+            <p>尚未添加寶可夢</p>
+          ) : (
+            editingPokemons.map((pokemon, idx) => (
+              <span key={idx} style={{ display: 'inline-block', position: 'relative', marginRight: '8px' }}>
+                <img
+                  className="bitimg"
+                  onClick={() => handleDetailClick(pokemon)}
+                  src={pokemon.sprites.front_default}
+                  alt={pokemon.name}
+                  style={{ width: '50px', marginRight: '5px', cursor: 'pointer' }}
+                />
+                <button
+                  onClick={() => handleRemovePokemon(idx)}
+                  style={{ position: 'absolute', top: 0, right: 0, background: 'red', color: '#fff', border: 'none', borderRadius: '50%', width: '18px', height: '18px', fontSize: '12px', cursor: 'pointer', lineHeight: '16px', padding: 0 }}
+                  title="刪除此寶可夢"
+                >×</button>
+              </span>
+            ))
+          );
+        } else {
+          return pokemonlist.length === 0 ? (
+            <p>尚未添加寶可夢</p>
+          ) : (
+            pokemonlist.map((pokemon, idx) => (
+              <img
+                key={idx}
+                className="bitimg"
+                onClick={() => handleDetailClick(pokemon)}
+                src={pokemon.sprites.front_default}
+                alt={pokemon.name}
+                style={{ width: '50px', marginRight: '5px' }}
+              />
+            ))
+          );
+        }
+      },
     },
     {
       title: '其他',

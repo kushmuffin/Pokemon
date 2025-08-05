@@ -4,6 +4,7 @@ import PokemonDetailDialog from './PokemonDetailDialog';
 import { TrainerContext } from './TrainerContext';
 
 import typeTranslations from '../Translations';
+import { pokemonName } from '../Translations';
 
 
 const Pokemon = () => {
@@ -75,15 +76,20 @@ const Pokemon = () => {
     // }
   }, [pokemonData, currentPage]);
 
-  useEffect(() => { // 以屬性搜索寶可夢
-    const filtered = pokemonList.filter(pokemon => {
-      // 如果沒有選擇任何屬性，顯示所有寶可夢
-      if (!selectedType) return true;
-      // 檢查寶可夢是否包含所選屬性
-      return pokemon.types.some(type => type.type.name === selectedType);
-    }).filter(pokemon =>
-      pokemon.name?.toLowerCase().includes(inputValue.toLowerCase())
-    );
+  useEffect(() => { // 以屬性和中英文搜尋寶可夢
+    const filtered = pokemonList
+      .filter(pokemon => {
+        // 如果沒有選擇任何屬性，顯示所有寶可夢
+        if (!selectedType) return true;
+        // 檢查寶可夢是否包含所選屬性
+        return pokemon.types.some(type => type.type.name === selectedType);
+      })
+      .filter(pokemon => {
+        const enName = pokemon.name?.toLowerCase() || '';
+        const zhName = (pokemonName[pokemon.name] || '').toLowerCase();
+        const keyword = inputValue.toLowerCase();
+        return enName.includes(keyword) || zhName.includes(keyword);
+      });
     setFilteredPokemon(filtered);
   }, [pokemonList, selectedType, inputValue]);
 
@@ -125,9 +131,12 @@ const Pokemon = () => {
 
   const handleSearch = () => {
     console.log('Input value at search:', inputValue);
-    const filtered = pokemonList.filter(pokemon =>
-      pokemon.name?.toLowerCase().includes(inputValue.toLowerCase())
-    );
+    const filtered = pokemonList.filter(pokemon => {
+      const enName = pokemon.name?.toLowerCase() || '';
+      const zhName = (pokemonName[pokemon.name] || '').toLowerCase();
+      const keyword = inputValue.toLowerCase();
+      return enName.includes(keyword) || zhName.includes(keyword);
+    });
     console.log('Filtered Pokemon:', filtered);
     setFilteredPokemon(filtered);
   };
@@ -221,7 +230,7 @@ const Pokemon = () => {
               <div className='pokemon-description'>
                 <span>#{pokemon.id}</span>
                 {/* <span>{allTranslations[pokemon.name] || pokemon.name}</span> */}
-                <span>{pokemon.name}</span>
+                <span>{pokemonName[pokemon.name] || pokemon.name}</span>
                 <div>
                   {pokemon.types.map(typeInfo => (
                   <span style={{'fontSize': '14px'}} key={typeInfo.type.name}>{typeTranslations[typeInfo.type.name] || typeInfo.type.name}</span>
