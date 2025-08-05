@@ -9,7 +9,7 @@ import female_character from '../assets/female_character.png';
 
 const Sidebar = () => {
   const { trainerData  } = useContext(TrainerContext);
-  const navigate = useNavigate();
+  const navigate = useNavigate(); // 導回首頁
 
   return (
     <aside className='aside'>
@@ -62,7 +62,7 @@ const Sidebar = () => {
               <button
                 onClick={() => {
                   localStorage.removeItem('isLoggedIn');
-                  navigate('/'); // 導回首頁
+                  navigate(import.meta.env.BASE_URL); // 導回首頁
                   window.location.reload();
                 }}
                 style={{
